@@ -30,7 +30,7 @@ Team split is still open. Each week lists tasks for both options:
 
 | Task | Option 1 | Option 2 |
 |---|---|---|
-| Gradio app (chat, model picker, citations panel, review flag), run with uv | Jason | Both |
+| Streamlit app (chat, sidebar model picker, citations panel, review flag), run with uv | Jason | Both |
 | Eval script and the first run on all models | Jason | Both |
 | Grade the first run and list the failures | Timothy | Both |
 | Prompt v2 from those failures, then save both runs | Both | Both |

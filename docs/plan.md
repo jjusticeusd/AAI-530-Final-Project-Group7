@@ -7,7 +7,7 @@ Seed code: `ms-aai-530-jjustice/playground/rules_referee.py` already has a Groq 
 
 Decisions made:
 - **Scope:** rules Q&A plus described-play rulings. Image/video plays are a stretch goal only.
-- **Frontend:** Gradio, run with uv and a setup script (no Docker: on macOS Docker gets no GPU, so Ollama runs natively either way).
+- **Frontend:** Streamlit, run with uv and a setup script (no Docker: on macOS Docker gets no GPU, so Ollama runs natively either way).
 - **Models:** free APIs and a local model, compared in the eval.
 - **Rulebook:** a fetch script; the PDF is gitignored.
 - **Repo:** public.
@@ -34,13 +34,13 @@ src/referee/
   retrieve.py             embeddings + cosine over ~1-2k chunks (numpy is enough, no vector DB); add keyword match for rule numbers if recall is weak
   referee.py              retrieve -> prompt -> structured ruling -> verify
   prompts/                system prompt versions (v1, v2, ...) kept for the appendix
-app/gradio_app.py         chat, model picker, retrieved-rules/citations panel, review flag
+app/streamlit_app.py      chat, sidebar model picker, retrieved-rules/citations panel, review flag
 eval/scenarios.csv        Timothy's plays + correct rulings (call, yards, rule)
 eval/run_eval.py          runs every scenario x model; accuracy, citation validity, latency
 eval/results/             saved runs per prompt version (iteration evidence)
 docs/                     documentation, prompt/testing appendix, AI + ethics reflection, slides
 ```
-Check current APIs with context7 when building: Gradio, the Groq SDK, the OpenRouter SDK, the Ollama API, and the embedding library.
+Check current APIs with context7 when building: Streamlit, the Groq SDK, the OpenRouter SDK, the Ollama API, and the embedding library.
 
 ## Model options
 | Role | Options |
@@ -53,13 +53,13 @@ Check current APIs with context7 when building: Gradio, the Groq SDK, the OpenRo
 The eval compares hosted vs local on accuracy, citation validity, latency, and cost. That maps to MLO 1 and MLO 3 and fills the deployment-tradeoff section of the docs.
 
 ## Presentation layer options
-- **Gradio, run with uv (chosen).** Chat plus a citations panel and model dropdown. `./setup.sh` once, then `uv run python app/gradio_app.py`. Without Ollama, the picker shows only the API models.
-- **Optional extras if time allows:** host on Hugging Face Spaces (API backends only, free CPU) for a public link; a Discord bot front end (reuses the llmcord idea) as future work.
+- **Streamlit, run with uv (chosen).** Chat bubbles, with the model picker in a sidebar and a citations panel. `./setup.sh` once, then `uv run streamlit run app/streamlit_app.py`. Without Ollama, the picker shows only the API models. Chosen over Gradio after trying both on the playground referee: the layout looks more like a finished app, and chat history is easy to reset (switching games or pressing New chat starts fresh).
+- **Optional extras if time allows:** host on Streamlit Community Cloud (free, deploys from the public GitHub repo, API backends only) for a public link; a Discord bot front end (reuses the llmcord idea) as future work.
 
 ## Team split (pick one)
 | | Option 1: Jason builds, Timothy owns rules + eval | Option 2: pair on everything |
 |---|---|---|
-| Jason | Repo, ingest/RAG, backends, Gradio, setup script, eval harness | Same code, done in shared sessions; Timothy reviews each PR |
+| Jason | Repo, ingest/RAG, backends, Streamlit app, setup script, eval harness | Same code, done in shared sessions; Timothy reviews each PR |
 | Timothy | 30-40 scenario test set with correct rulings, judges outputs, writes the football/user sections, leads the presentation intro | Co-writes prompts and scenarios; builds some components himself |
 | Pros | Fastest; plays to strengths | Both can explain every component (the rubric requires the team to understand all parts) |
 | Cons | Timothy must still be able to explain the code in the demo | Slower; scheduling around football season |
@@ -69,7 +69,7 @@ The eval compares hosted vs local on accuracy, citation validity, latency, and c
 |---|---|---|---|
 | M3 | now - Mon 11/9 | Lock scope + team split; confirm rulebook PDF source and edition with Timothy; scaffold repo, port backends, fetch script + ingest | **Check-in #1 (11/9)**: goal, users, models, prompt strategy, AI tools, progress |
 | M4 | 11/10 - 11/16 | RAG + structured ruling + verify working from CLI; system prompt v1; Timothy drafts scenarios (rules Q&A, penalties, edge cases, out-of-scope, judgment calls) | Check-in + status form |
-| M5 | 11/17 - 11/23 | Gradio UI + setup script; first eval run on all models; revise the prompt to v2 based on failures; save both runs | Check-in |
+| M5 | 11/17 - 11/23 | Streamlit UI + setup script; first eval run on all models; revise the prompt to v2 based on failures; save both runs | Check-in |
 | M6 | 11/24 - 11/30 (Thanksgiving 11/26) | Final eval + comparison table; README, documentation, appendix, AI/ethics reflection; record the presentation (under 5 min intro, at least 5 min demo of a real scenario) | Check-in; **project done** |
 | M7 | 12/1 - 12/7 | Buffer: fixes, re-record if needed, clean the repo, peer evaluation | **Final + peer eval (12/7)** |
 
@@ -81,6 +81,6 @@ Risks to check early:
 ## Verification
 - `uv run python scripts/fetch_rulebook.py` and then ingest: spot-check 5 chunks to confirm the rule ids are correct.
 - CLI ruling on 3 known A.R. plays from each backend. The JSON should parse, and the citations should pass verification.
-- `./setup.sh` then `uv run python app/gradio_app.py`: Gradio loads; one API model and one Ollama model each answer.
+- `./setup.sh` then `uv run streamlit run app/streamlit_app.py`: the app loads; one API model and one Ollama model each answer.
 - `uv run python eval/run_eval.py`: results CSV per model and prompt version; Timothy signs off on the correct rulings.
 - Before submitting: README fresh-clone test, no keys or PDF in git history, all rubric items checked against `Final_Project_71_Design_an_LLM_Application.md`.
