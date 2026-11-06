@@ -14,6 +14,7 @@ Team split is still open. Each week lists tasks for both options:
 |---|---|---|
 | Pick the team split and confirm scope (rules Q&A plus described plays) | Both | Both |
 | Find the official NCAA rulebook PDF and confirm the edition | Timothy | Both |
+| Sign up for free API keys: Groq at https://console.groq.com/keys and OpenRouter at https://openrouter.ai/keys. Put them in `.env`, never in git | Timothy | Both |
 | Set up the repo and rulebook pipeline: scaffold, `setup.sh`, backends from `playground/rules_referee.py`, fetch script, ingest by rule number | Jason | Both |
 | **Submit check-in:** goal, users, models, prompt strategy, AI tools, progress | Both | Both |
 
