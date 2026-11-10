@@ -15,7 +15,7 @@ Team split is still open. Each week lists tasks for both options:
 | Pick the team split and confirm scope (rules Q&A plus described plays) | Both | Both |
 | Find the official NCAA rulebook PDF and confirm the edition | Timothy | Both |
 | Sign up for free API keys: Groq at https://console.groq.com/keys and OpenRouter at https://openrouter.ai/keys. Put them in `.env`, never in git | Timothy | Both |
-| Set up the repo and rulebook pipeline: scaffold, `setup.sh`, backends from `playground/rules_referee.py`, fetch script, ingest by rule number | Jason | Both |
+| Set up the repo and rulebook pipeline: scaffold, backends from `playground/rules_referee.py`, rulebook download and ingest by rule number | Jason | Both |
 | **Submit check-in:** goal, users, models, prompt strategy, AI tools, progress | Both | Both |
 
 ## Module 4: Tue 11/10 to Mon 11/16
@@ -25,6 +25,7 @@ Team split is still open. Each week lists tasks for both options:
 | Rule search, structured ruling, and citation check, working from the CLI | Jason | Both |
 | System prompt v1 | Jason, Timothy reviews | Both |
 | Draft 30-40 test plays with correct rulings: rules questions, penalties, edge cases, out-of-scope, judgment calls | Timothy | Both |
+| Extend the list of football slang and the rulebook words it maps to (lateral = backward pass, onside = free kick, OT = extra period, ...) so rule search finds the right sections | Timothy | Both |
 | **Submit check-in and the status form** | Both | Both |
 
 ## Module 5: Tue 11/17 to Mon 11/23

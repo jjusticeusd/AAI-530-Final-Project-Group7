@@ -1,0 +1,15 @@
+[project]
+name = "referee"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "groq",
+    "httpx",
+    "openrouter",
+    "pypdf",
+    "python-dotenv",
+]
+
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
