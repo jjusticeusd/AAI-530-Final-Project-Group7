@@ -4,7 +4,7 @@ Compiled by Timothy Hays with AI assistance for the NCAA Football Referee projec
 
 On special-teams plays, use **kicking team** and **receiving team**, including player numbers. Use offensive/defensive labels for ordinary scrimmage plays.
 
-Machine-readable vocabulary: [`src/referee/terminology.json`](../src/referee/terminology.json). This file is ready for a retrieval loader; it does not itself implement query expansion.
+Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology.json). This file is ready for a retrieval loader; it does not itself implement query expansion.
 
 | Fan/player wording | Rulebook search wording |
 |---|---|
@@ -23,7 +23,6 @@ Machine-readable vocabulary: [`src/referee/terminology.json`](../src/referee/ter
 | endzone | end zone |
 | extra point | try; field goal on a try |
 | facemask | face mask; helmet opening |
-| fair catch | fair catch; valid signal |
 | fake punt | scrimmage-kick formation; forward pass; simulated scrimmage kick |
 | flinched | false start |
 | going for two | try; touchdown on a try |
@@ -64,7 +63,6 @@ Machine-readable vocabulary: [`src/referee/terminology.json`](../src/referee/ter
 | pick six | interception; touchdown; change of possession |
 | picked off | interception |
 | pitch | backward pass; forward and backward pass |
-| punt | scrimmage kick |
 | pushed off | offensive pass interference |
 | quarter | period |
 | roughing the QB | roughing the passer |

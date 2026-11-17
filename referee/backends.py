@@ -17,11 +17,16 @@ OPENROUTER_MODELS = [
 ]
 OLLAMA_MODELS = {"gemma3:12b": {"temperature": 0}}
 OLLAMA_NUM_CTX = 16384
-MAX_OUTPUT_TOKENS = 1200
+MAX_OUTPUT_TOKENS = 4000
 RETRIES = 3
 COOLDOWN = 20
 RETRY_CODES = {408, 429, 500, 502, 503, 524, 529}
-CONNECTION_ERRORS = (groq.APIConnectionError, httpx.TransportError, urllib.error.URLError, TimeoutError)
+CONNECTION_ERRORS = (
+    groq.APIConnectionError,
+    httpx.TransportError,
+    urllib.error.URLError,
+    TimeoutError,
+)
 
 
 def ollama_url():
@@ -30,7 +35,9 @@ def ollama_url():
 
 def ollama_post(path, payload=None):
     data = json.dumps(payload).encode() if payload is not None else None
-    request = urllib.request.Request(f"{ollama_url()}{path}", data=data, headers={"Content-Type": "application/json"})
+    request = urllib.request.Request(
+        f"{ollama_url()}{path}", data=data, headers={"Content-Type": "application/json"}
+    )
     with urllib.request.urlopen(request, timeout=600) as response:
         return json.load(response)
 
@@ -41,6 +48,12 @@ def ollama_models():
     except urllib.error.URLError:
         return []
     return [m for m in OLLAMA_MODELS if m in installed]
+
+
+def checked(text, finish_reason):
+    if finish_reason == "length":
+        print(f"  (answer cut off at the {MAX_OUTPUT_TOKENS}-token output limit)")
+    return text
 
 
 def make_groq(model):
@@ -54,7 +67,8 @@ def make_groq(model):
             max_completion_tokens=MAX_OUTPUT_TOKENS,
             messages=messages,
         )
-        return completion.choices[0].message.content
+        choice = completion.choices[0]
+        return checked(choice.message.content, choice.finish_reason)
 
     return send
 
@@ -63,21 +77,27 @@ def make_openrouter(model):
     client = OpenRouter()
 
     def send(messages):
-        response = client.chat.send(model=model, messages=messages, temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
-        return response.choices[0].message.content
+        response = client.chat.send(
+            model=model, messages=messages, temperature=0, max_tokens=MAX_OUTPUT_TOKENS
+        )
+        choice = response.choices[0]
+        return checked(choice.message.content, choice.finish_reason)
 
     return send
 
 
 def make_ollama(model):
     def send(messages):
-        reply = ollama_post("/api/chat", {
-            "model": model,
-            "messages": messages,
-            "stream": False,
-            "options": {**OLLAMA_MODELS[model], "num_ctx": OLLAMA_NUM_CTX},
-        })
-        return reply["message"]["content"]
+        reply = ollama_post(
+            "/api/chat",
+            {
+                "model": model,
+                "messages": messages,
+                "stream": False,
+                "options": {**OLLAMA_MODELS[model], "num_ctx": OLLAMA_NUM_CTX},
+            },
+        )
+        return checked(reply["message"]["content"], reply.get("done_reason"))
 
     return send
 
@@ -107,7 +127,11 @@ def error_status(e):
 
 
 def error_headers(e):
-    return getattr(e, "headers", None) or getattr(getattr(e, "response", None), "headers", None) or {}
+    return (
+        getattr(e, "headers", None)
+        or getattr(getattr(e, "response", None), "headers", None)
+        or {}
+    )
 
 
 def ask(send, messages):

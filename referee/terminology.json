@@ -221,17 +221,6 @@
       "caution": "Free kick and punt touchback spots differ."
     },
     {
-      "phrase": "fair catch",
-      "expand_to": [
-        "fair catch",
-        "valid signal"
-      ],
-      "rule_hints": [
-        "6-5-1"
-      ],
-      "caution": "Kick type and location affect next spot."
-    },
-    {
       "phrase": "roughing the QB",
       "expand_to": [
         "roughing the passer"
@@ -418,14 +407,6 @@
       "phrase": "kickoff",
       "expand_to": [
         "free kick"
-      ],
-      "rule_hints": [],
-      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
-    },
-    {
-      "phrase": "punt",
-      "expand_to": [
-        "scrimmage kick"
       ],
       "rule_hints": [],
       "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
