@@ -13,7 +13,7 @@ Team split is still open. Each week lists tasks for both options:
 | Task | Option 1 | Option 2 |
 |---|---|---|
 | Pick the team split and confirm scope (rules Q&A plus described plays) | Both | Both |
-| Find the official NCAA rulebook PDF and confirm the edition | Timothy | Both |
+| Find the official NCAA rulebook PDF and confirm the edition. Done: 2026 NCAA Football Rules and Interpretations | Timothy | Both |
 | Sign up for free API keys: Groq at https://console.groq.com/keys and OpenRouter at https://openrouter.ai/keys. Put them in `.env`, never in git | Timothy | Both |
 | Set up the repo and rulebook pipeline: scaffold, backends from `playground/rules_referee.py`, rulebook download and ingest by rule number | Jason | Both |
 | **Submit the M3 check-in** (Canvas survey, 5 pts) | Both | Both |
