@@ -24,3 +24,7 @@ Works on macOS and Windows.
 - `src/referee/backends.py`: Groq, OpenRouter, and Ollama clients with retries. Only providers that are set up are offered.
 - `src/referee/ingest.py`: downloads the official PDF (not stored in this repo) and splits it into rule chunks (like `9-1-2`) and approved-ruling chunks (like `A.R. 9-1-2`).
 - `docs/`: assignment spec, plan, and schedule.
+
+## Football terminology
+
+See [slang to rulebook wording](docs/slang_to_rulebook.md) for common player, coach and broadcaster phrases. The matching [JSON vocabulary](src/referee/terminology.json) is provided for retrieval integration. Special-teams descriptions use kicking team and receiving team.
