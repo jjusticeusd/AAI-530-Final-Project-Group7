@@ -30,7 +30,7 @@ Rule search only (no model calls, free):
 uv run python eval/retrieval_eval.py
 ```
 
-Rulings from the models. Each question runs 3 times per model. Answers are saved to `eval/results/` as they come in, so a run stopped by a free-tier limit picks up where it left off:
+Rulings from the models. By default the eval uses one model per provider: Groq `openai/gpt-oss-120b`, OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free`, and Ollama `gemma3:12b`. Each question runs 3 times per model. Answers are saved to `eval/results/` as they come in, so a run stopped by a free-tier limit picks up where it left off:
 ```
 uv run python eval/run_eval.py --split dev
 uv run python eval/run_eval.py --split dev --models "Groq / openai/gpt-oss-120b"
@@ -45,7 +45,7 @@ uv run python eval/run_eval.py --split dev --summary
 - `referee/ruling.py`: searches the rules, asks the model for a JSON ruling, and checks that every cited rule number was in the retrieved rules and that the quote is word for word.
 - `referee/prompts/`: system prompt versions.
 - `referee/app.py`: the Streamlit chat app.
-- `eval/retrieval.csv`, `eval/retrieval_eval.py`: 17 rule-search test questions and their scorer.
+- `eval/retrieval.csv`, `eval/retrieval_eval.py`: 19 rule-search test questions and their scorer.
 - `eval/scenarios.csv`: test questions with the expected ruling (foul, yards, spot, rule). `dev` questions are used to revise the prompt; `test` questions are only for the final run.
 - `eval/run_eval.py`: runs the scenarios on each model and scores type, foul, yards, spot, rule cited, citation check, quote, review flag, consistency across runs, and latency. Also writes a grading sheet for human review.
 - `eval/results/`: saved model answers (one JSONL file per prompt and model), plus the generated summary table and grading sheet.

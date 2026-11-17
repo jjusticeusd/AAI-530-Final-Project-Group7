@@ -26,7 +26,7 @@ def new_chat():
 
 def penalty(ruling):
     if ruling.get("foul") is False:
-        return "No foul"
+        return None if ruling.get("type") == "rule" else "No foul"
     if not ruling.get("foul"):
         return None
     yards, spot = ruling.get("penalty_yards"), ruling.get("enforcement_spot")
@@ -36,7 +36,11 @@ def penalty(ruling):
 def show(result):
     ruling = result["ruling"]
     if ruling is None:
-        st.warning("The model did not return a ruling in the expected format. Check the rulebook before relying on this.")
+        raw = result["raw"]
+        if "{" in raw and "}" not in raw[raw.find("{"):]:
+            st.warning("The answer was cut off before it finished. Try again or pick another model.")
+        else:
+            st.warning("The model did not return a ruling in the expected format. Check the rulebook before relying on this.")
         st.markdown(result["raw"])
     else:
         st.markdown(f"**{ruling.get('call', '')}**")
@@ -49,6 +53,8 @@ def show(result):
         cited = [f"{r} (not in the retrieved rules)" if r in result["unverified"] else f"{r} (checked)" for r in ruling.get("rules") or []]
         if cited:
             st.caption("Rules cited: " + "; ".join(cited))
+        if mentioned := [u for u in result["unverified"] if u not in (ruling.get("rules") or [])]:
+            st.caption("Also mentioned, but not in the retrieved rules: " + "; ".join(mentioned))
         if not result["quote_found"]:
             st.caption("The quote was not found word for word in the retrieved rules.")
     if result["needs_review"]:

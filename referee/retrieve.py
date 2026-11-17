@@ -21,8 +21,11 @@ SYNONYMS = {
     "conversion": "try",
     "pick six": "intercept touchdown",
     "two minute warning": "two-minute timeout",
+    "quarterback": "passer",
+    "qb": "passer",
+    "allowed": "legal",
 }
-STOPWORDS = set("a an and are can do does for how i if in is it many much of on or say says the to what when where which who why with".split())
+STOPWORDS = set("a allow allowed an and are can do does for how i if in is it many much of on one or play say says the to what when where which who why with".split())
 
 
 def load_chunks():

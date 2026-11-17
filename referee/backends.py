@@ -17,7 +17,7 @@ OPENROUTER_MODELS = [
 ]
 OLLAMA_MODELS = {"gemma3:12b": {"temperature": 0}}
 OLLAMA_NUM_CTX = 16384
-MAX_OUTPUT_TOKENS = 1200
+MAX_OUTPUT_TOKENS = 4000
 RETRIES = 3
 COOLDOWN = 20
 RETRY_CODES = {408, 429, 500, 502, 503, 524, 529}
@@ -43,6 +43,12 @@ def ollama_models():
     return [m for m in OLLAMA_MODELS if m in installed]
 
 
+def checked(text, finish_reason):
+    if finish_reason == "length":
+        print(f"  (answer cut off at the {MAX_OUTPUT_TOKENS}-token output limit)")
+    return text
+
+
 def make_groq(model):
     client = Groq()
 
@@ -54,7 +60,8 @@ def make_groq(model):
             max_completion_tokens=MAX_OUTPUT_TOKENS,
             messages=messages,
         )
-        return completion.choices[0].message.content
+        choice = completion.choices[0]
+        return checked(choice.message.content, choice.finish_reason)
 
     return send
 
@@ -64,7 +71,8 @@ def make_openrouter(model):
 
     def send(messages):
         response = client.chat.send(model=model, messages=messages, temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
-        return response.choices[0].message.content
+        choice = response.choices[0]
+        return checked(choice.message.content, choice.finish_reason)
 
     return send
 
@@ -77,7 +85,7 @@ def make_ollama(model):
             "stream": False,
             "options": {**OLLAMA_MODELS[model], "num_ctx": OLLAMA_NUM_CTX},
         })
-        return reply["message"]["content"]
+        return checked(reply["message"]["content"], reply.get("done_reason"))
 
     return send
 
