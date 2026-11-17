@@ -43,7 +43,7 @@ uv run python eval/run_eval.py --split dev --summary
 uv run python lint.py
 ```
 
-Runs ruff's basic checks (syntax errors, undefined names, unused imports). Add `--fix` to fix what it can.
+Runs ruff's basic checks (syntax errors, undefined names, unused imports), fixes what it can, and formats the code.
 
 ## Layout
 
@@ -53,9 +53,15 @@ Runs ruff's basic checks (syntax errors, undefined names, unused imports). Add `
 - `referee/ruling.py`: searches the rules, adds the penalty when a rule's penalty is written elsewhere in its section, asks the model for a JSON ruling, and checks that every cited rule number was in the retrieved rules and that the quote is word for word.
 - `referee/prompts/`: system prompt versions.
 - `referee/app.py`: the Streamlit chat app.
+- `referee/terminology.json`: football slang mapped to rulebook wording. Search adds the rulebook words when a question uses the slang.
 - `eval/retrieval.csv`, `eval/retrieval_eval.py`: 19 rule-search test questions and their scorer.
 - `eval/scenarios.csv`: test questions with the expected ruling (foul, yards, spot, rule). `dev` questions are used to revise the prompt; `test` questions are only for the final run.
 - `eval/run_eval.py`: runs the scenarios on each model and scores type, foul, yards, spot, rule cited, citation check, quote, review flag, consistency across runs, and latency. Also writes a grading sheet for human review.
 - `eval/results/`: saved model answers (one JSONL file per prompt and model), plus the generated summary table and grading sheet.
 - `docs/appendix.md`: prompt and testing appendix.
+- `docs/slang_to_rulebook.md`: football slang guide.
 - `docs/planning/`: the assignment spec, plan, and schedule.
+
+## Football terminology
+
+See [slang to rulebook wording](docs/slang_to_rulebook.md) for common player, coach and broadcaster phrases. The matching [JSON vocabulary](referee/terminology.json) is used by rule search. Special-teams descriptions use kicking team and receiving team.

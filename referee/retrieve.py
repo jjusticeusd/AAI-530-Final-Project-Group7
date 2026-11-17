@@ -3,10 +3,17 @@ import math
 import re
 from collections import Counter
 from difflib import get_close_matches
+from pathlib import Path
 
 from referee.ingest import CHUNKS
 
 TOP_K = 6
+TERMS = {
+    e["phrase"].lower(): " ".join(e["expand_to"])
+    for e in json.loads(
+        (Path(__file__).parent / "terminology.json").read_text(encoding="utf-8")
+    )["entries"]
+}
 SYNONYMS = {
     "lateral": "backward pass",
     "onside": "free kick restraining line",
@@ -55,14 +62,14 @@ def words(text):
     ]
 
 
+def has(phrase, text):
+    return re.search(rf"\b{re.escape(phrase)}s?\b", text)
+
+
 def expand(question):
     lowered = question.lower()
-    return " ".join(
-        [
-            question,
-            *(v for k, v in SYNONYMS.items() if re.search(rf"\b{k}s?\b", lowered)),
-        ]
-    )
+    terms = {**TERMS, **SYNONYMS}
+    return " ".join([question, *(v for k, v in terms.items() if has(k, lowered))])
 
 
 def correct(word, vocab):

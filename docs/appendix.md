@@ -21,8 +21,9 @@ uv run python eval/retrieval_eval.py
 | 5. Embeddings only | 11/17 | `all-MiniLM-L6-v2` from sentence-transformers. |
 | 6. Embeddings + BM25 (hybrid) | 11/17 | Both rankings merged with reciprocal rank fusion. Worse, so dropped. |
 | 7. BM25 + more slang and filler words | 15/19 (13/17 on the first 17) | "quarterback" and "qb" add "passer", "allowed" adds "legal", and "allow", "allowed", "one", and "play" are ignored. Kept. |
+| 8. + team slang list (`referee/terminology.json`) | 15/19 | 77 phrases from Timothy, like "horse collar" and "DPI". "punt" and "fair catch" were removed: they added "scrimmage kick" and "valid signal", which pushed A.R. 6-5-5 out of the top 6 (14/19). Same score, wider slang coverage. Kept. |
 
-We kept version 3, then added version 7 on top.
+We kept version 3, then added versions 7 and 8 on top.
 
 **Fixes found along the way:**
 - "How many yards for pass interference" first ranked A.R. 9-2-3 at the top, because "how" and "many" are rare in the rulebook and scored high. A short stopword list put 7-3-8 first.

@@ -1,0 +1,772 @@
+{
+  "status": "retrieval_vocabulary_draft_for_team_review",
+  "usage": "Case-insensitive token/phrase matching. Add retrieval terms; preserve original query. Do not replace substrings (e.g., PI inside another word), assign penalties, or turn expansions into established play facts. Rule IDs are retrieval hints, not verified answer citations. Use kicking team and receiving team for all special-teams plays. Ambiguous terms may expand to several topics and require clarification. No penalties or rulings should be inferred from slang alone.",
+  "entries": [
+    {
+      "phrase": "lateral",
+      "expand_to": [
+        "backward pass"
+      ],
+      "rule_hints": [
+        "7-2",
+        "2-19-2"
+      ],
+      "caution": "A lateral is backward only if the rule definition is satisfied; keep the original wording."
+    },
+    {
+      "phrase": "onside",
+      "expand_to": [
+        "free kick",
+        "restraining line",
+        "touching and recovery"
+      ],
+      "rule_hints": [
+        "6-1-3"
+      ],
+      "caution": "Expand retrieval; recovery legality also depends on touching and distance."
+    },
+    {
+      "phrase": "OT",
+      "expand_to": [
+        "extra periods",
+        "extra period"
+      ],
+      "rule_hints": [
+        "3-1-3"
+      ],
+      "caution": "Query abbreviation expansion only."
+    },
+    {
+      "phrase": "overtime",
+      "expand_to": [
+        "extra periods"
+      ],
+      "rule_hints": [
+        "3-1-3"
+      ],
+      "caution": "NCAA extra periods; do not substitute NFL overtime."
+    },
+    {
+      "phrase": "DPI",
+      "expand_to": [
+        "defensive pass interference",
+        "catchable forward pass"
+      ],
+      "rule_hints": [
+        "7-3-8"
+      ],
+      "caution": "Catchability, timing and neutral-zone conditions matter."
+    },
+    {
+      "phrase": "OPI",
+      "expand_to": [
+        "offensive pass interference"
+      ],
+      "rule_hints": [
+        "7-3-8"
+      ],
+      "caution": "Use the pinned edition for penalty; 2026 book lists 10 yards."
+    },
+    {
+      "phrase": "PI",
+      "expand_to": [
+        "pass interference"
+      ],
+      "rule_hints": [
+        "7-3-8"
+      ],
+      "caution": "Ambiguous offense/defense; search both and clarify."
+    },
+    {
+      "phrase": "jumped offsides",
+      "expand_to": [
+        "offside",
+        "false start",
+        "neutral zone"
+      ],
+      "rule_hints": [
+        "7-1-2",
+        "7-1-5"
+      ],
+      "caution": "Do not decide which foul from slang alone."
+    },
+    {
+      "phrase": "encroachment",
+      "expand_to": [
+        "encroachment",
+        "offside",
+        "neutral zone"
+      ],
+      "rule_hints": [
+        "7-1-3",
+        "7-1-5"
+      ],
+      "caution": "NCAA offensive encroachment differs from casual usage for a defender."
+    },
+    {
+      "phrase": "grounding",
+      "expand_to": [
+        "illegal forward pass",
+        "tackle box",
+        "conserve yardage"
+      ],
+      "rule_hints": [
+        "7-3-2"
+      ],
+      "caution": "Check possession and tackle-box exception conditions."
+    },
+    {
+      "phrase": "throwaway",
+      "expand_to": [
+        "illegal forward pass",
+        "eligible receiver",
+        "neutral zone"
+      ],
+      "rule_hints": [
+        "7-3-2"
+      ],
+      "caution": "Throwing away does not by itself establish intentional grounding."
+    },
+    {
+      "phrase": "horse collar",
+      "expand_to": [
+        "horse-collar tackle"
+      ],
+      "rule_hints": [
+        "9-1-15"
+      ],
+      "caution": "Search expansion; verify all rule conditions."
+    },
+    {
+      "phrase": "facemask",
+      "expand_to": [
+        "face mask",
+        "helmet opening"
+      ],
+      "rule_hints": [
+        "9-1-8"
+      ],
+      "caution": "Contact alone does not determine prohibited grasp/twist/pull."
+    },
+    {
+      "phrase": "targeting",
+      "expand_to": [
+        "crown of the helmet",
+        "defenseless player",
+        "head or neck area"
+      ],
+      "rule_hints": [
+        "9-1-3",
+        "9-1-4"
+      ],
+      "caution": "Retrieve both routes; avoid unsupported visual judgment."
+    },
+    {
+      "phrase": "spearing",
+      "expand_to": [
+        "crown of the helmet",
+        "targeting"
+      ],
+      "rule_hints": [
+        "9-1-3"
+      ],
+      "caution": "Informal term, not an automatic targeting finding."
+    },
+    {
+      "phrase": "down by contact",
+      "expand_to": [
+        "dead ball",
+        "ball declared dead"
+      ],
+      "rule_hints": [
+        "4-1-3"
+      ],
+      "caution": "Do not import an NFL contact requirement."
+    },
+    {
+      "phrase": "muffed punt",
+      "expand_to": [
+        "muff",
+        "scrimmage kick",
+        "touching"
+      ],
+      "rule_hints": [
+        "2-11-2",
+        "6-3"
+      ],
+      "caution": "A muff is not established possession; do not rewrite as a fumble."
+    },
+    {
+      "phrase": "bobble",
+      "expand_to": [
+        "catch",
+        "control",
+        "possession"
+      ],
+      "rule_hints": [
+        "2-4-3"
+      ],
+      "caution": "Slight movement does not necessarily mean loss of control."
+    },
+    {
+      "phrase": "touchback",
+      "expand_to": [
+        "touchback",
+        "free kick",
+        "scrimmage kick"
+      ],
+      "rule_hints": [
+        "8-6-2"
+      ],
+      "caution": "Free kick and punt touchback spots differ."
+    },
+    {
+      "phrase": "roughing the QB",
+      "expand_to": [
+        "roughing the passer"
+      ],
+      "rule_hints": [
+        "9-1-9"
+      ],
+      "caution": "QB is a role, but rule protection depends on the action."
+    },
+    {
+      "phrase": "in the pocket",
+      "expand_to": [
+        "tackle box"
+      ],
+      "rule_hints": [
+        "2-34",
+        "7-3-2"
+      ],
+      "caution": "Approximate search expansion; preserve exact location facts."
+    },
+    {
+      "phrase": "line of scrimmage",
+      "expand_to": [
+        "neutral zone",
+        "scrimmage line"
+      ],
+      "rule_hints": [
+        "2-21",
+        "2-17"
+      ],
+      "caution": "Related concepts, not interchangeable in every rule."
+    },
+    {
+      "phrase": "pick play",
+      "expand_to": [
+        "offensive pass interference",
+        "blocking"
+      ],
+      "rule_hints": [
+        "7-3-8"
+      ],
+      "caution": "Do not infer a foul just from the label."
+    },
+    {
+      "phrase": "endzone",
+      "expand_to": [
+        "end zone"
+      ],
+      "rule_hints": [
+        "2-31"
+      ],
+      "caution": "Spelling normalization only."
+    },
+    {
+      "phrase": "out of bounds",
+      "expand_to": [
+        "boundary line",
+        "sideline",
+        "out of bounds"
+      ],
+      "rule_hints": [
+        "4-2"
+      ],
+      "caution": "Preserve distinction between ball/player status."
+    },
+    {
+      "phrase": "holding",
+      "expand_to": [
+        "holding",
+        "illegal use of hands"
+      ],
+      "rule_hints": [
+        "9-3-3",
+        "9-3-4"
+      ],
+      "caution": "Ask offense/defense, play type and foul location before enforcement."
+    },
+    {
+      "phrase": "two point conversion",
+      "expand_to": [
+        "try",
+        "touchdown on a try"
+      ],
+      "rule_hints": [
+        "8-3",
+        "8-1-1"
+      ],
+      "caution": "Search term expansion only."
+    },
+    {
+      "phrase": "PAT",
+      "expand_to": [
+        "try",
+        "field goal on a try"
+      ],
+      "rule_hints": [
+        "8-3",
+        "8-1-1"
+      ],
+      "caution": "A try is not necessarily a one-point kick."
+    },
+    {
+      "phrase": "kickoff out of bounds",
+      "expand_to": [
+        "free kick out of bounds",
+        "kicking team"
+      ],
+      "rule_hints": [
+        "6-2-1"
+      ],
+      "caution": "Preserve receiving-team enforcement options."
+    },
+    {
+      "phrase": "iron cross",
+      "expand_to": [
+        "T signal",
+        "invalid fair catch signal",
+        "fair catch signal",
+        "no advance"
+      ],
+      "rule_hints": [
+        "2-8",
+        "6-5-2",
+        "6-5-3"
+      ],
+      "caution": "Player slang supplied by Timothy: puts both hands up to signal he will not return the kick. Preserve the described arm position and movement; do not assume it is a valid fair-catch signal. Use kicking-team and receiving-team terminology.",
+      "authoring": "Timothy Hays supplied phrase and meaning in chat; AI-assisted retrieval expansions."
+    },
+    {
+      "phrase": "onside kick",
+      "expand_to": [
+        "free kick",
+        "restraining line",
+        "touching and recovery"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "quarter",
+      "expand_to": [
+        "period"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "extra point",
+      "expand_to": [
+        "try",
+        "field goal on a try"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "pick six",
+      "expand_to": [
+        "interception",
+        "touchdown",
+        "change of possession"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "chop block",
+      "expand_to": [
+        "chop block",
+        "high-low combination block"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "cut block",
+      "expand_to": [
+        "blocking below the waist"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "kickoff",
+      "expand_to": [
+        "free kick"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "pitch",
+      "expand_to": [
+        "backward pass",
+        "forward and backward pass"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "two-point conversion",
+      "expand_to": [
+        "try",
+        "touchdown on a try"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "going for two",
+      "expand_to": [
+        "try",
+        "touchdown on a try"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "picked off",
+      "expand_to": [
+        "interception"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "pick",
+      "expand_to": [
+        "interception",
+        "offensive pass interference"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "rub route",
+      "expand_to": [
+        "offensive pass interference",
+        "blocking"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "blindside hit",
+      "expand_to": [
+        "blind-side block"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "block in the back",
+      "expand_to": [
+        "illegal block in the back"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "clipping",
+      "expand_to": [
+        "clipping"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "helmet-to-helmet",
+      "expand_to": [
+        "targeting",
+        "head or neck area",
+        "defenseless player"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "headshot",
+      "expand_to": [
+        "targeting",
+        "head or neck area",
+        "defenseless player"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "late hit",
+      "expand_to": [
+        "personal foul",
+        "dead-ball foul"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "hit the punter",
+      "expand_to": [
+        "roughing or running into kicker or holder"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "jersey tug",
+      "expand_to": [
+        "holding",
+        "pass interference"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "pushed off",
+      "expand_to": [
+        "offensive pass interference"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "jumped the snap",
+      "expand_to": [
+        "offside",
+        "false start",
+        "neutral zone"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "flinched",
+      "expand_to": [
+        "false start"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "moved early",
+      "expand_to": [
+        "false start"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "illegal motion",
+      "expand_to": [
+        "player in motion",
+        "illegal motion"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "illegal shift",
+      "expand_to": [
+        "shift",
+        "one-second stop",
+        "false start"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "outside the pocket",
+      "expand_to": [
+        "tackle box",
+        "illegal forward pass"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "LOS",
+      "expand_to": [
+        "scrimmage line",
+        "neutral zone"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "toe tap",
+      "expand_to": [
+        "catch",
+        "inbounds",
+        "boundary line"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "toe drag",
+      "expand_to": [
+        "catch",
+        "inbounds",
+        "boundary line"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "toe in heel out",
+      "expand_to": [
+        "catch",
+        "continuous toe-heel landing",
+        "out of bounds"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "knee was down",
+      "expand_to": [
+        "ball declared dead"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "stripped",
+      "expand_to": [
+        "fumble",
+        "loss of possession"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "scoop and score",
+      "expand_to": [
+        "fumble recovery",
+        "touchdown"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "broke the plane",
+      "expand_to": [
+        "touchdown",
+        "goal-line plane"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "moved the chains",
+      "expand_to": [
+        "first down",
+        "line to gain"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "turnover on downs",
+      "expand_to": [
+        "new series",
+        "failure to reach the line to gain"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "waved teammates away",
+      "expand_to": [
+        "invalid fair catch signal",
+        "no advance"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "downed the punt",
+      "expand_to": [
+        "touching",
+        "recovery",
+        "ball declared dead"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "fake punt",
+      "expand_to": [
+        "scrimmage-kick formation",
+        "forward pass",
+        "simulated scrimmage kick"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "spike",
+      "expand_to": [
+        "forward pass to conserve time",
+        "illegal forward pass"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "clock the ball",
+      "expand_to": [
+        "forward pass to conserve time",
+        "illegal forward pass"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "taking a knee",
+      "expand_to": [
+        "ball declared dead"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "taunting",
+      "expand_to": [
+        "unsportsmanlike conduct"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "showboating",
+      "expand_to": [
+        "unsportsmanlike conduct"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "too many men",
+      "expand_to": [
+        "substitution",
+        "more than eleven players"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    }
+  ]
+}
