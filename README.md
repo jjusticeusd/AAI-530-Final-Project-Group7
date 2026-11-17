@@ -28,3 +28,7 @@ Works on macOS and Windows.
 ## Football terminology
 
 See [slang to rulebook wording](docs/slang_to_rulebook.md) for common player, coach and broadcaster phrases. The matching [JSON vocabulary](src/referee/terminology.json) is provided for retrieval integration. Special-teams descriptions use kicking team and receiving team.
+
+## Development evaluation prototype
+
+See [evaluation setup and current results](evaluation/README.md) for Timothy’s approved 30-development/10-final-test split, local Groq prototype and saved development outputs. The prototype remains under development; generated answers require human grading.
