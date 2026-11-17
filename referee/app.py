@@ -30,17 +30,27 @@ def penalty(ruling):
     if not ruling.get("foul"):
         return None
     yards, spot = ruling.get("penalty_yards"), ruling.get("enforcement_spot")
-    return ", ".join(["Foul", *([f"{yards} yards"] if yards is not None else []), *([f"from the {spot}"] if spot else [])])
+    return ", ".join(
+        [
+            "Foul",
+            *([f"{yards} yards"] if yards is not None else []),
+            *([f"from the {spot}"] if spot else []),
+        ]
+    )
 
 
 def show(result):
     ruling = result["ruling"]
     if ruling is None:
         raw = result["raw"]
-        if "{" in raw and "}" not in raw[raw.find("{"):]:
-            st.warning("The answer was cut off before it finished. Try again or pick another model.")
+        if "{" in raw and "}" not in raw[raw.find("{") :]:
+            st.warning(
+                "The answer was cut off before it finished. Try again or pick another model."
+            )
         else:
-            st.warning("The model did not return a ruling in the expected format. Check the rulebook before relying on this.")
+            st.warning(
+                "The model did not return a ruling in the expected format. Check the rulebook before relying on this."
+            )
         st.markdown(result["raw"])
     else:
         st.markdown(f"**{ruling.get('call', '')}**")
@@ -50,15 +60,28 @@ def show(result):
             st.markdown(ruling["explanation"])
         if ruling.get("quote"):
             st.markdown(f"> {ruling['quote']}")
-        cited = [f"{r} (not in the retrieved rules)" if r in result["unverified"] else f"{r} (checked)" for r in ruling.get("rules") or []]
+        cited = [
+            f"{r} (not in the retrieved rules)"
+            if r in result["unverified"]
+            else f"{r} (checked)"
+            for r in ruling.get("rules") or []
+        ]
         if cited:
             st.caption("Rules cited: " + "; ".join(cited))
-        if mentioned := [u for u in result["unverified"] if u not in (ruling.get("rules") or [])]:
-            st.caption("Also mentioned, but not in the retrieved rules: " + "; ".join(mentioned))
+        if mentioned := [
+            u for u in result["unverified"] if u not in (ruling.get("rules") or [])
+        ]:
+            st.caption(
+                "Also mentioned, but not in the retrieved rules: "
+                + "; ".join(mentioned)
+            )
         if not result["quote_found"]:
             st.caption("The quote was not found word for word in the retrieved rules.")
     if result["needs_review"]:
-        st.warning("Needs review: check this with the rulebook or an official.", icon=":material/flag:")
+        st.warning(
+            "Needs review: check this with the rulebook or an official.",
+            icon=":material/flag:",
+        )
     with st.expander("Retrieved rules"):
         for c in result["found"]:
             st.markdown(f"**{c['id']}** (p. {c['page']})")
@@ -76,7 +99,9 @@ with st.sidebar:
     st.button("New chat", on_click=new_chat)
 
 st.title("NCAA Football Referee")
-st.caption("Answers come from the 2026 NCAA Football Rules book. This is a study aid, not an official ruling.")
+st.caption(
+    "Answers come from the 2026 NCAA Football Rules book. This is a study aid, not an official ruling."
+)
 if not options:
     st.error("No model is set up. Add a key to .env or start Ollama, then reload.")
     st.stop()
@@ -95,10 +120,16 @@ if question := st.chat_input("Ask a rules question or describe a play"):
     with st.chat_message("assistant", avatar=AVATARS["assistant"]):
         with st.spinner("Checking the rulebook..."):
             send = backend(label)
-            result = rule(rules, lambda m: ask(send, m), [{"role": m["role"], "content": m["content"]} for m in history])
+            result = rule(
+                rules,
+                lambda m: ask(send, m),
+                [{"role": m["role"], "content": m["content"]} for m in history],
+            )
         if result["raw"] is None:
             history.pop()
             st.error("The referee is unavailable right now. Try again in a minute.")
         else:
-            history.append({"role": "assistant", "content": result["raw"], "result": result})
+            history.append(
+                {"role": "assistant", "content": result["raw"], "result": result}
+            )
             show(result)

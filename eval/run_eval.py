@@ -17,9 +17,23 @@ EVAL = Path(__file__).parent
 SCENARIOS = EVAL / "scenarios.csv"
 RESULTS = EVAL / "results"
 LONG_CONTEXT_OLLAMA_NUM_CTX = 98304
-CHECKS = ["parsed", "type", "foul", "yards", "spot", "rule", "citations", "quote", "review"]
+CHECKS = [
+    "parsed",
+    "type",
+    "foul",
+    "yards",
+    "spot",
+    "rule",
+    "citations",
+    "quote",
+    "review",
+]
 GRADES = ["correct", "useful", "clear", "safe", "notes"]
-MODELS = ["Groq / openai/gpt-oss-120b", "OpenRouter / nvidia/nemotron-3-ultra-550b-a55b:free", "Ollama / gemma3:12b"]
+MODELS = [
+    "Groq / openai/gpt-oss-120b",
+    "OpenRouter / nvidia/nemotron-3-ultra-550b-a55b:free",
+    "Ollama / gemma3:12b",
+]
 
 
 def slug(text):
@@ -49,10 +63,16 @@ def score(s, result):
     if s["penalty_yards"]:
         checks["yards"] = str(r.get("penalty_yards")) == s["penalty_yards"]
     if s["enforcement_spot"]:
-        checks["spot"] = s["enforcement_spot"] in (r.get("enforcement_spot") or "").lower()
+        checks["spot"] = (
+            s["enforcement_spot"] in (r.get("enforcement_spot") or "").lower()
+        )
     if s["rules"]:
         cited = numbers(x for x in r.get("rules") or [] if isinstance(x, str))
-        checks["rule"] = any(c == w or c.startswith(f"{w}-") for c in cited for w in numbers(split(s["rules"])))
+        checks["rule"] = any(
+            c == w or c.startswith(f"{w}-")
+            for c in cited
+            for w in numbers(split(s["rules"]))
+        )
     if s["needs_review"]:
         checks["review"] = result["needs_review"] == (s["needs_review"] == "true")
     return checks
@@ -60,7 +80,14 @@ def score(s, result):
 
 def decision(result):
     r = result["ruling"] or {}
-    return json.dumps([r.get("type"), r.get("foul"), r.get("penalty_yards"), (r.get("enforcement_spot") or "").lower()])
+    return json.dumps(
+        [
+            r.get("type"),
+            r.get("foul"),
+            r.get("penalty_yards"),
+            (r.get("enforcement_spot") or "").lower(),
+        ]
+    )
 
 
 def load(path):
@@ -79,18 +106,40 @@ def run(label, scenarios, chunks, prompt, runs, context):
                 if (s["id"], n) in done:
                     continue
                 start = time.perf_counter()
-                result = rule(chunks, lambda m: ask(send, m), [{"role": "user", "content": s["question"]}], prompt, set(split(s["exclude"])), context)
+                result = rule(
+                    chunks,
+                    lambda m: ask(send, m),
+                    [{"role": "user", "content": s["question"]}],
+                    prompt,
+                    set(split(s["exclude"])),
+                    context,
+                )
                 seconds = round(time.perf_counter() - start, 2)
                 if result["raw"] is None:
-                    print(f"  {label}: no answer for {s['id']} run {n}, stopping. Rerun later to continue.")
+                    print(
+                        f"  {label}: no answer for {s['id']} run {n}, stopping. Rerun later to continue."
+                    )
                     return
-                row = {"id": s["id"], "run": n, "model": label, "prompt": prompt, "context": context, "seconds": seconds,
-                       "retrieved": result["retrieved"] if context == "rag" else [],
-                       "raw": result["raw"], "ruling": result["ruling"], "unverified": result["unverified"],
-                       "quote_found": result["quote_found"], "needs_review": result["needs_review"], "checks": score(s, result)}
+                row = {
+                    "id": s["id"],
+                    "run": n,
+                    "model": label,
+                    "prompt": prompt,
+                    "context": context,
+                    "seconds": seconds,
+                    "retrieved": result["retrieved"] if context == "rag" else [],
+                    "raw": result["raw"],
+                    "ruling": result["ruling"],
+                    "unverified": result["unverified"],
+                    "quote_found": result["quote_found"],
+                    "needs_review": result["needs_review"],
+                    "checks": score(s, result),
+                }
                 f.write(json.dumps(row) + "\n")
                 f.flush()
-                print(f"  {label} {s['id']} run {n}: {seconds}s {'ok' if all(row['checks'].values()) else 'miss'}")
+                print(
+                    f"  {label} {s['id']} run {n}: {seconds}s {'ok' if all(row['checks'].values()) else 'miss'}"
+                )
 
 
 def rate(values):
@@ -98,7 +147,10 @@ def rate(values):
 
 
 def summarize(prompt, context, name, scenarios):
-    lines = ["| Model | " + " | ".join(CHECKS) + " | consistent | median s |", "|" + "---|" * (len(CHECKS) + 3)]
+    lines = [
+        "| Model | " + " | ".join(CHECKS) + " | consistent | median s |",
+        "|" + "---|" * (len(CHECKS) + 3),
+    ]
     grading = []
     for path in sorted(RESULTS.glob(f"{prompt}_{context}_*.jsonl")):
         rows = [r for r in load(path) if r["id"] in scenarios]
@@ -109,15 +161,33 @@ def summarize(prompt, context, name, scenarios):
         by_id = defaultdict(list)
         for r in rows:
             by_id[r["id"]].append(r)
-        cells = [rate([r["checks"][c] for r in rows if c in r["checks"]]) for c in CHECKS]
-        consistent = rate([len({decision(r) for r in group}) == 1 for group in by_id.values()])
+        cells = [
+            rate([r["checks"][c] for r in rows if c in r["checks"]]) for c in CHECKS
+        ]
+        consistent = rate(
+            [len({decision(r) for r in group}) == 1 for group in by_id.values()]
+        )
         seconds = sorted(r["seconds"] for r in rows)
-        lines.append(f"| {rows[0]['model']} | " + " | ".join(cells) + f" | {consistent} | {seconds[len(seconds) // 2]} |")
-        grading += [{"model": r["model"], "id": r["id"], "call": (r["ruling"] or {}).get("call", r["raw"]),
-                     "explanation": (r["ruling"] or {}).get("explanation", ""), **dict.fromkeys(GRADES, "")}
-                    for r in rows if r["run"] == 1]
+        lines.append(
+            f"| {rows[0]['model']} | "
+            + " | ".join(cells)
+            + f" | {consistent} | {seconds[len(seconds) // 2]} |"
+        )
+        grading += [
+            {
+                "model": r["model"],
+                "id": r["id"],
+                "call": (r["ruling"] or {}).get("call", r["raw"]),
+                "explanation": (r["ruling"] or {}).get("explanation", ""),
+                **dict.fromkeys(GRADES, ""),
+            }
+            for r in rows
+            if r["run"] == 1
+        ]
     table = "\n".join(lines)
-    (RESULTS / f"{prompt}_{context}_{name}_summary.md").write_text(table + "\n", encoding="utf-8")
+    (RESULTS / f"{prompt}_{context}_{name}_summary.md").write_text(
+        table + "\n", encoding="utf-8"
+    )
     sheet = RESULTS / f"{prompt}_{context}_{name}_grading.csv"
     if sheet.exists():
         with open(sheet, newline="", encoding="utf-8") as f:
@@ -135,13 +205,25 @@ def summarize(prompt, context, name, scenarios):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--models", nargs="*", help='labels like "Groq / openai/gpt-oss-120b"; default is the MODELS list, skipping any that are not set up')
+    parser.add_argument(
+        "--models",
+        nargs="*",
+        help='labels like "Groq / openai/gpt-oss-120b"; default is the MODELS list, skipping any that are not set up',
+    )
     parser.add_argument("--prompt", default=PROMPT)
-    parser.add_argument("--context", default="rag", choices=CONTEXTS,
-                        help="rag: top search hits; full: every chunk; rules: every rule section, no approved rulings")
+    parser.add_argument(
+        "--context",
+        default="rag",
+        choices=CONTEXTS,
+        help="rag: top search hits; full: every chunk; rules: every rule section, no approved rulings",
+    )
     parser.add_argument("--split", default="dev", choices=["dev", "test", "all"])
     parser.add_argument("--runs", type=int, default=3)
-    parser.add_argument("--summary", action="store_true", help="only rebuild the summary from saved results")
+    parser.add_argument(
+        "--summary",
+        action="store_true",
+        help="only rebuild the summary from saved results",
+    )
     args = parser.parse_args()
     load_dotenv()
     with open(SCENARIOS, newline="", encoding="utf-8") as f:

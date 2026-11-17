@@ -36,7 +36,7 @@ referee/
   app.py                  Streamlit chat, sidebar model picker, retrieved-rules/citations panel, review flag
 eval/scenarios.csv        Timothy's test questions + correct rulings (call, yards, rule); split into a dev set (used to revise prompts) and a test set (final scoring only)
 eval/retrieval.csv        rule-search test questions, scored by eval/retrieval_eval.py
-eval/run_eval.py          runs every question x model 3 times; exact match on call/yards/spot, citation validity, consistency across runs, latency
+eval/run_eval.py          runs every question on the three eval models (one per provider), --runs times; exact match on call/yards/spot, citation validity, consistency across runs, latency
 eval/results/             saved runs per prompt version (iteration evidence)
 docs/report.md            project documentation + AI use and ethics reflection (deliverables 2 and 4)
 docs/appendix.md          prompt and testing appendix (deliverable 3)
@@ -52,6 +52,7 @@ Check current APIs with context7 when building: Streamlit, the Groq SDK, the Ope
 | Hosted free API | Groq `openai/gpt-oss-120b` / `gpt-oss-20b`; OpenRouter `:free` models from the prototype list (re-check availability at build time; free tiers change) |
 | Local (Mac, 24 GB unified) | Ollama 12-20B class: `gemma3:12b`, `qwen3:14b`, `gpt-oss:20b`; structured output via Ollama `format` JSON schema |
 | Stretch: images | A free vision model on OpenRouter (e.g. a `-vl` model) for screenshot plays |
+| Eval models | One per provider: Groq `openai/gpt-oss-120b`, OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free`, Ollama `gemma3:12b`. The app still offers every model that is set up |
 | Embeddings | Tried `all-MiniLM-L6-v2` (sentence-transformers); dropped because it scored worse than BM25 and added about 750 MB of install |
 
 The eval compares hosted vs local on accuracy, citation validity, consistency, latency, and cost. Timothy also grades each answer with a 3-5 item rubric (correct, useful, clear, safe for the intended user), which covers the spec's usefulness and audience-fit criteria. Optional: an LLM judge scores the same answers, compared against Timothy's scores. The deployment section also notes the local models' memory needs and the 4-bit quantization Ollama uses. That maps to MLO 1, MLO 3, and the M7 deployment outcomes.

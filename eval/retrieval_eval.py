@@ -15,7 +15,9 @@ def main():
         got = [c["id"] for c in retrieve(chunks, t["question"])]
         ok = any(g.split()[-1] == t["rule"] for g in got)
         hits += ok
-        print("OK  " if ok else "MISS", t["rule"].ljust(7), t["question"][:60], "->", got)
+        print(
+            "OK  " if ok else "MISS", t["rule"].ljust(7), t["question"][:60], "->", got
+        )
     print(f"{hits}/{len(tests)} found the right rule in the top {len(got)}")
 
 
