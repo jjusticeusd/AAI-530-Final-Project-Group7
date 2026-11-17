@@ -165,4 +165,3 @@ Use offensive/defensive player number for ordinary scrimmage plays and kicking-t
 **Review:** Approved by Timothy, 2026-11-16.
 
 **Notes:** Timothy approved all current questions, answers and notes in chat on 2026-11-16, including the revised NCAA-040.
-

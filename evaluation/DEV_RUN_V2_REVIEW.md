@@ -543,4 +543,3 @@ This is an internal development diagnostic. Generated answers have not been appr
 **Review flags:** Behavior differs from key; adjudicate equivalent uncertainty wording.; Foul status differs from key.; Penalty-yard field differs from key; adjudicate no-penalty null versus zero separately.
 
 **Timothy grading:** [ ] Correct [ ] Partly correct [ ] Incorrect [ ] Needs discussion
-
