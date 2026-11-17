@@ -27,19 +27,24 @@ Users: fans, players, high school/youth officials studying the rules, broadcaste
 README.md                 purpose, setup, models, env vars, limitations
 pyproject.toml / uv.lock  uv-managed, bare package names
 .env.example              GROQ_API_KEY, OPENROUTER_API_KEY, OLLAMA_URL
-src/referee/
+referee/
   backends.py             ported from rules_referee.py (make_groq/make_openrouter/make_ollama, ask() retries)
   ingest.py               downloads the PDF into data/ (gitignored), then PDF -> chunks split on Rule/Section/Article numbers, keeps the rule id per chunk
-  retrieve.py             keyword search over 473 chunks (BM25, rule-number boost, typo fix, slang-to-rulebook word list), then add embeddings and combine both scores (hybrid); numpy is enough, no vector DB
-  referee.py              retrieve -> prompt -> structured ruling -> verify
+  retrieve.py             keyword search over 473 chunks (BM25, rule-number boost, typo fix, slang-to-rulebook word list). Embeddings were tried and dropped: 11/17 vs 13/17 for BM25 (see docs/appendix.md)
+  ruling.py               retrieve -> prompt -> structured ruling -> verify
   prompts/                system prompt versions (v1, v2, ...) kept for the appendix; each includes one example ruling in the JSON format
-app/streamlit_app.py      chat, sidebar model picker, retrieved-rules/citations panel, review flag
+  app.py                  Streamlit chat, sidebar model picker, retrieved-rules/citations panel, review flag
 eval/scenarios.csv        Timothy's test questions + correct rulings (call, yards, rule); split into a dev set (used to revise prompts) and a test set (final scoring only)
+eval/retrieval.csv        rule-search test questions, scored by eval/retrieval_eval.py
 eval/run_eval.py          runs every question x model 3 times; exact match on call/yards/spot, citation validity, consistency across runs, latency
 eval/results/             saved runs per prompt version (iteration evidence)
-docs/                     documentation, prompt/testing appendix, AI + ethics reflection, slides
+docs/report.md            project documentation + AI use and ethics reflection (deliverables 2 and 4)
+docs/appendix.md          prompt and testing appendix (deliverable 3)
+docs/presentation.md      presentation outline and demo script (deliverable 5)
+docs/images/              app screenshots used in the docs
+docs/planning/            assignment spec, this plan, the schedule
 ```
-Check current APIs with context7 when building: Streamlit, the Groq SDK, the OpenRouter SDK, the Ollama API, and the embedding library.
+Check current APIs with context7 when building: Streamlit, the Groq SDK, the OpenRouter SDK, and the Ollama API.
 
 ## Model options
 | Role | Options |
@@ -47,12 +52,12 @@ Check current APIs with context7 when building: Streamlit, the Groq SDK, the Ope
 | Hosted free API | Groq `openai/gpt-oss-120b` / `gpt-oss-20b`; OpenRouter `:free` models from the prototype list (re-check availability at build time; free tiers change) |
 | Local (Mac, 24 GB unified) | Ollama 12-20B class: `gemma3:12b`, `qwen3:14b`, `gpt-oss:20b`; structured output via Ollama `format` JSON schema |
 | Stretch: images | A free vision model on OpenRouter (e.g. a `-vl` model) for screenshot plays |
-| Embeddings | Small local sentence-transformers model (free, offline) |
+| Embeddings | Tried `all-MiniLM-L6-v2` (sentence-transformers); dropped because it scored worse than BM25 and added about 750 MB of install |
 
 The eval compares hosted vs local on accuracy, citation validity, consistency, latency, and cost. Timothy also grades each answer with a 3-5 item rubric (correct, useful, clear, safe for the intended user), which covers the spec's usefulness and audience-fit criteria. Optional: an LLM judge scores the same answers, compared against Timothy's scores. The deployment section also notes the local models' memory needs and the 4-bit quantization Ollama uses. That maps to MLO 1, MLO 3, and the M7 deployment outcomes.
 
 ## Presentation layer options
-- **Streamlit, run with uv (chosen).** Chat bubbles, with the model picker in a sidebar and a citations panel. `uv run python -m referee.ingest` once, then `uv run streamlit run app/streamlit_app.py`. The picker shows only the providers that are set up (a key in `.env`, or Ollama running). Chosen over Gradio after trying both on the playground referee: the layout looks more like a finished app, and chat history is easy to reset (switching games or pressing New chat starts fresh).
+- **Streamlit, run with uv (chosen).** Chat bubbles, with the model picker in a sidebar and a citations panel. `uv run python -m referee.ingest` once, then `uv run streamlit run referee/app.py`. The picker shows only the providers that are set up (a key in `.env`, or Ollama running). Chosen over Gradio after trying both on the playground referee: the layout looks more like a finished app, and chat history is easy to reset (switching games or pressing New chat starts fresh).
 - **Optional extras if time allows:** host on Streamlit Community Cloud (free, deploys from the public GitHub repo, API backends only) for a public link; a Discord bot front end (reuses the llmcord idea) as future work.
 
 ## Team split (pick one)
@@ -67,7 +72,7 @@ The eval compares hosted vs local on accuracy, citation validity, consistency, l
 | Week | Dates | Project work | Due |
 |---|---|---|---|
 | M3 | now - Mon 11/9 | Lock scope + team split; confirm rulebook PDF source and edition with Timothy; scaffold repo, port backends, rulebook download + ingest | **M3 check-in (11/9)**: Canvas survey, 5 pts |
-| M4 | 11/10 - 11/16 | RAG + structured ruling + verify working from CLI; system prompt v1; add embeddings to rule search; Timothy drafts test questions (rules Q&A, penalties, edge cases, out-of-scope, judgment calls), split into dev and test, and extends the slang-to-rulebook word list for rule search; ask the instructor about training | **M4 check-in (11/16)**: goal, users, model, prompt strategy, AI tools, progress. **Status form**: project description, dataset (rulebook edition, pages, chunk count, test set size), meetings in the last two weeks, each member's contributions |
+| M4 | 11/10 - 11/16 | RAG + structured ruling + verify working from CLI; system prompt v1; try embeddings in rule search (done: dropped, BM25 scored better); Timothy drafts test questions (rules Q&A, penalties, edge cases, out-of-scope, judgment calls), split into dev and test, and extends the slang-to-rulebook word list for rule search; ask the instructor about training | **M4 check-in (11/16)**: goal, users, model, prompt strategy, AI tools, progress. **Status form**: project description, dataset (rulebook edition, pages, chunk count, test set size), meetings in the last two weeks, each member's contributions |
 | M5 | 11/17 - 11/23 | Streamlit UI; first eval run on all models; revise the prompt to v2 based on dev-set failures; save both runs | Check-in (individual A5.1 also due 11/23) |
 | M6 | 11/24 - 11/30 (Thanksgiving 11/26) | Final eval on the held-out test set + comparison table; README, documentation, appendix, AI/ethics reflection; record the presentation (under 5 min intro, at least 5 min demo of a real scenario) | Check-in; **project done** (individual A6.1 also due 11/30) |
 | M7 | 12/1 - 12/7 | Buffer: fixes, re-record if needed, clean the repo, peer evaluation | **Final + peer eval (12/7)** |
@@ -81,6 +86,6 @@ Risks to check early:
 ## Verification
 - `uv run python -m referee.ingest`: spot-check 5 chunks to confirm the rule ids are correct.
 - CLI ruling on 3 known A.R. plays from each backend. The JSON should parse, and the citations should pass verification.
-- `uv run python -m referee.ingest` then `uv run streamlit run app/streamlit_app.py`: the app loads; one API model and one Ollama model each answer.
+- `uv run python -m referee.ingest` then `uv run streamlit run referee/app.py`: the app loads; one API model and one Ollama model each answer.
 - `uv run python eval/run_eval.py`: results CSV per model and prompt version; Timothy signs off on the correct rulings.
 - Before submitting: README fresh-clone test, no keys or PDF in git history, all rubric items checked against `Final_Project_71_Design_an_LLM_Application.md`.

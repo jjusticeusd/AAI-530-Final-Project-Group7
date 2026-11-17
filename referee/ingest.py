@@ -6,7 +6,7 @@ from pathlib import Path
 from pypdf import PdfReader
 
 URL = "https://ncaaorg.s3.amazonaws.com/championships/sports/football/rules/PRMFB_RulesBook.pdf"
-DATA = Path(__file__).resolve().parents[2] / "data"
+DATA = Path(__file__).resolve().parents[1] / "data"
 PDF = DATA / "rulebook.pdf"
 CHUNKS = DATA / "chunks.jsonl"
 
