@@ -49,13 +49,13 @@ Check current APIs with context7 when building: Streamlit, the Groq SDK, the Ope
 ## Model options
 | Role | Options |
 |---|---|
-| Hosted free API | Groq `openai/gpt-oss-120b` / `gpt-oss-20b`; OpenRouter `:free` models from the prototype list (re-check availability at build time; free tiers change) |
+| Hosted free API | Groq `openai/gpt-oss-120b`; OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free` (free tiers change; re-check before recording) |
 | Local (Mac, 24 GB unified) | Ollama 12-20B class: `gemma3:12b`, `qwen3:14b`, `gpt-oss:20b`; structured output via Ollama `format` JSON schema |
 | Stretch: images | A free vision model on OpenRouter (e.g. a `-vl` model) for screenshot plays |
 | Eval models | One per provider: Groq `openai/gpt-oss-120b`, OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free`, Ollama `gemma3:12b`. The app still offers every model that is set up |
 | Embeddings | Tried `all-MiniLM-L6-v2` (sentence-transformers); dropped because it scored worse than BM25 and added about 750 MB of install |
 
-The eval compares hosted vs local on accuracy, citation validity, consistency, latency, and cost. Timothy also grades each answer with a 3-5 item rubric (correct, useful, clear, safe for the intended user), which covers the spec's usefulness and audience-fit criteria. Optional: an LLM judge scores the same answers, compared against Timothy's scores. The deployment section also notes the local models' memory needs and the 4-bit quantization Ollama uses. That maps to MLO 1, MLO 3, and the M7 deployment outcomes.
+The eval compares hosted vs local on accuracy, citation validity, consistency, latency, and cost. Timothy also grades each answer 1-3 on four items (correct, useful, clear, safe for the intended user) using `eval/rubric.md`, which covers the spec's usefulness and audience-fit criteria. He grades before any judge scores exist. An LLM judge from a different model family (Groq `qwen/qwen3.8-27b`) then scores the same answers with the same rubric and the expected answer (`eval/judge.py`), and we report how often it agrees with Timothy. The test set includes adversarial and harm cases: instructions hidden in the question, pressure to call a dangerous hit legal, out-of-scope asks, and too little detail to rule. The deployment section also notes the local models' memory needs and the 4-bit quantization Ollama uses. That maps to MLO 1, MLO 3, and the M7 deployment outcomes.
 
 ## Presentation layer options
 - **Streamlit, run with uv (chosen).** Chat bubbles, with the model picker in a sidebar and a citations panel. `uv run python -m referee.ingest` once, then `uv run streamlit run referee/app.py`. The picker shows only the providers that are set up (a key in `.env`, or Ollama running). Chosen over Gradio after trying both on the playground referee: the layout looks more like a finished app, and chat history is easy to reset (switching games or pressing New chat starts fresh).

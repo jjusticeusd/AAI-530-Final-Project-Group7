@@ -10,14 +10,11 @@ from groq import Groq
 from openrouter import OpenRouter
 from openrouter.errors import OpenRouterError
 
-GROQ_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
-OPENROUTER_MODELS = [
-    "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "google/gemma-4-31b-it:free",
-]
+GROQ_MODELS = ["openai/gpt-oss-120b"]
+OPENROUTER_MODELS = ["nvidia/nemotron-3-ultra-550b-a55b:free"]
 OLLAMA_MODELS = {"gemma3:12b": {"temperature": 0}}
 OLLAMA_NUM_CTX = 16384
-MAX_OUTPUT_TOKENS = 4000
+MAX_OUTPUT_TOKENS = 3500
 RETRIES = 3
 COOLDOWN = 20
 RETRY_CODES = {408, 429, 500, 502, 503, 524, 529}
@@ -107,10 +104,10 @@ MAKERS = {"Groq": make_groq, "OpenRouter": make_openrouter, "Ollama": make_ollam
 
 def available():
     providers = {}
-    if os.environ.get("GROQ_API_KEY"):
-        providers["Groq"] = GROQ_MODELS
     if os.environ.get("OPENROUTER_API_KEY"):
         providers["OpenRouter"] = OPENROUTER_MODELS
+    if os.environ.get("GROQ_API_KEY"):
+        providers["Groq"] = GROQ_MODELS
     local = ollama_models()
     if local:
         providers["Ollama"] = local

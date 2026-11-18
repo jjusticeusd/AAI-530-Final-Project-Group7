@@ -84,28 +84,20 @@ def parse(text):
 
 
 def squash(text):
-    return " ".join(
-        re.sub(
-            "[\u2018\u2019]",
-            "'",
-            re.sub(
-                "[\u201c\u201d]",
-                '"',
-                re.sub("[\u2010\u2011]", "-", REFERENCE.sub("", text)),
-            ),
-        )
-        .lower()
-        .split()
-    )
+    text = re.sub("[\u2010\u2011]", "-", REFERENCE.sub("", text)).lower()
+    text = re.sub(r"\(\w{1,3}\)", " ", text)
+    return " ".join(re.sub(r"[^\w\s-]", " ", text).split())
 
 
 def quoted(quote, text):
+    text = f" {text} "
     at = 0
     for part in filter(None, map(squash, re.split(r"\.\.\.|\u2026", quote))):
+        part = f" {part} "
         at = text.find(part, at)
         if at < 0:
             return False
-        at += len(part)
+        at += len(part) - 1
     return True
 
 
