@@ -165,7 +165,11 @@ def summarize(prompt, context, name, scenarios):
             rate([r["checks"][c] for r in rows if c in r["checks"]]) for c in CHECKS
         ]
         consistent = rate(
-            [len({decision(r) for r in group}) == 1 for group in by_id.values()]
+            [
+                len({decision(r) for r in group}) == 1
+                for group in by_id.values()
+                if len(group) > 1
+            ]
         )
         seconds = sorted(r["seconds"] for r in rows)
         lines.append(
@@ -177,6 +181,8 @@ def summarize(prompt, context, name, scenarios):
             {
                 "model": r["model"],
                 "id": r["id"],
+                "question": scenarios[r["id"]]["question"],
+                "expected": scenarios[r["id"]]["answer"],
                 "call": (r["ruling"] or {}).get("call", r["raw"]),
                 "explanation": (r["ruling"] or {}).get("explanation", ""),
                 **dict.fromkeys(GRADES, ""),
