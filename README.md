@@ -60,6 +60,7 @@ Runs ruff's basic checks (syntax errors, undefined names, unused imports), fixes
 - `eval/scenarios.csv`: test questions with the expected ruling (foul, yards, spot, rule). `dev` questions are used to revise the prompt; `test` questions are only for the final run.
 - `eval/run_eval.py`: runs the scenarios on each model and scores type, foul, yards, spot, rule cited, citation check, quote, review flag, consistency across runs, and latency. Also writes a grading sheet for human review.
 - `eval/results/`: saved model answers (one JSONL file per prompt and model), plus the generated summary table and grading sheet.
+- `docs/report.md`: project report, with results, limitations, ethics, and AI use.
 - `docs/appendix.md`: prompt and testing appendix.
 - `docs/slang_to_rulebook.md`: football slang guide.
 - `docs/planning/`: the assignment spec, plan, and schedule.
@@ -67,3 +68,14 @@ Runs ruff's basic checks (syntax errors, undefined names, unused imports), fixes
 ## Football terminology
 
 See [slang to rulebook wording](docs/slang_to_rulebook.md) for common player, coach and broadcaster phrases. The matching [JSON vocabulary](referee/terminology.json) is used by rule search. Special-teams descriptions use kicking team and receiving team.
+
+## Known limitations
+
+- A study aid, not an official ruling. Not for live games.
+- Answers come only from the 6 rule sections search finds. If the right rule is not among them, the model says the rules don't cover it, or reasons from the wrong rule.
+- The checks confirm that cited rules and the quote come from the retrieved text. They do not prove the reasoning is right.
+- Free tiers have rate limits. Long questions can be too big for Groq's free tier.
+- Questions to Groq and OpenRouter leave your machine. Use Ollama to keep them local.
+- Text only, English only, NCAA rules only.
+
+See section 8 of the [report](docs/report.md) for details.
