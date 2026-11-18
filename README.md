@@ -4,6 +4,8 @@ AAI-530 Final Project, Group 7: Jason Justice and Timothy Hays.
 
 Ask an NCAA football rules question or describe a play, and get a ruling that cites rule numbers from the official 2026 NCAA Football Rules and Interpretations. Work in progress.
 
+![The app ruling on a described play: offensive pass interference, 10 yards from the previous spot, with the rules it cited](docs/images/pass_interference.png)
+
 ## Setup
 
 Works on macOS and Windows.

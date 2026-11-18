@@ -49,7 +49,7 @@ Check current APIs with context7 when building: Streamlit, the Groq SDK, the Ope
 ## Model options
 | Role | Options |
 |---|---|
-| Hosted free API | Groq `openai/gpt-oss-120b` / `gpt-oss-20b`; OpenRouter `:free` models from the prototype list (re-check availability at build time; free tiers change) |
+| Hosted free API | Groq `openai/gpt-oss-120b`; OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free` (free tiers change; re-check before recording) |
 | Local (Mac, 24 GB unified) | Ollama 12-20B class: `gemma3:12b`, `qwen3:14b`, `gpt-oss:20b`; structured output via Ollama `format` JSON schema |
 | Stretch: images | A free vision model on OpenRouter (e.g. a `-vl` model) for screenshot plays |
 | Eval models | One per provider: Groq `openai/gpt-oss-120b`, OpenRouter `nvidia/nemotron-3-ultra-550b-a55b:free`, Ollama `gemma3:12b`. The app still offers every model that is set up |
