@@ -50,7 +50,7 @@ Runs ruff's basic checks (syntax errors, undefined names, unused imports), fixes
 - `referee/backends.py`: Groq, OpenRouter, and Ollama clients with retries. Only providers that are set up are offered.
 - `referee/ingest.py`: downloads the official PDF (not stored in this repo) and splits it into rule chunks (like `9-1-2`) and approved-ruling chunks (like `A.R. 9-1-2`).
 - `referee/retrieve.py`: keyword search (BM25) over the chunks, with a rule-number boost, typo fixes, and a football slang list.
-- `referee/ruling.py`: searches the rules, adds the penalty when a rule's penalty is written elsewhere in its section, asks the model for a JSON ruling, and checks that every cited rule number was in the retrieved rules and that the quote is word for word.
+- `referee/ruling.py`: searches the rules, adds the penalty when a rule's penalty is written elsewhere in its section, asks the model for a JSON ruling, and checks that every cited rule number was in the retrieved rules and that the quote is word for word (punctuation and list markers like "(a)" are ignored).
 - `referee/prompts/`: system prompt versions.
 - `referee/app.py`: the Streamlit chat app.
 - `referee/terminology.json`: football slang mapped to rulebook wording. Search adds the rulebook words when a question uses the slang.

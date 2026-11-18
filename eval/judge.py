@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from run_eval import EVAL, RESULTS, SCENARIOS, load, split
+from run_eval import EVAL, RESULTS, SCENARIOS, load, quote_found, split
 
 from referee.backends import ask, backend
 from referee.retrieve import load_chunks
@@ -60,7 +60,7 @@ App answer: {json.dumps(row["ruling"]) if row["ruling"] else row["raw"]}
 
 Checks:
 - Every cited rule was in the excerpts: {yes(not row["unverified"])}{f" (not found: {', '.join(row['unverified'])})" if row["unverified"] else ""}
-- Quote found word for word: {yes(row["quote_found"])}
+- Quote found word for word: {yes(quote_found(row, s, chunks))}
 - Flagged for review: {yes(row["needs_review"])}
 
 Rulebook excerpts the app was given that it cited or the expected answer names:

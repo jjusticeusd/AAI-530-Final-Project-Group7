@@ -49,7 +49,7 @@ Team split is still open. Each week lists tasks for both options:
 | README and project documentation | Jason (tech), Timothy (users, football) | Both |
 | Prompt and testing appendix | Both | Both |
 | AI use and ethics reflection | Both | Both |
-| Record the presentation (5 min or less intro, then 5 min or more demo) | Timothy leads the intro, Jason the demo | Both |
+| Record the presentation (5 min or less intro, then 5 min or more demo). Script and the before-recording checklist: `docs/presentation.md` | Timothy leads the intro, Jason the demo | Both |
 | **Submit the M6 check-in. The project is done.** Individual A6.1 is also due 11/30 | Both | Both |
 
 ## Module 7: Tue 12/1 to Mon 12/7 (buffer)

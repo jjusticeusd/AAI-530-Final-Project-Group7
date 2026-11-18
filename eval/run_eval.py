@@ -11,7 +11,16 @@ from dotenv import load_dotenv
 from referee import backends
 from referee.backends import ask, available, backend
 from referee.retrieve import load_chunks
-from referee.ruling import CONTEXTS, PROMPT, RULE_NUMBER, rule
+from referee.ruling import (
+    CONTEXTS,
+    PROMPT,
+    RULE_NUMBER,
+    context_chunks,
+    quoted,
+    rule,
+    squash,
+    with_penalties,
+)
 
 EVAL = Path(__file__).parent
 SCENARIOS = EVAL / "scenarios.csv"
@@ -90,6 +99,19 @@ def decision(result):
     )
 
 
+def quote_found(r, s, chunks):
+    quote = (r["ruling"] or {}).get("quote")
+    if not quote:
+        return r["quote_found"]
+    pool = [c for c in chunks if c["id"] not in set(split(s["exclude"]))]
+    if r.get("context", "rag") == "rag":
+        by_id = {c["id"]: c for c in pool}
+        found = with_penalties([by_id[i] for i in r["retrieved"] if i in by_id], pool)
+    else:
+        found = context_chunks(pool, s["question"], r.get("context", "rag"))
+    return quoted(quote, squash(" ".join(c["text"] for c in found)))
+
+
 def load(path):
     if not path.exists():
         return []
@@ -152,11 +174,13 @@ def summarize(prompt, context, name, scenarios):
         "|" + "---|" * (len(CHECKS) + 3),
     ]
     grading = []
+    chunks = load_chunks()
     for path in sorted(RESULTS.glob(f"{prompt}_{context}_*.jsonl")):
         rows = [r for r in load(path) if r["id"] in scenarios]
         if not rows:
             continue
         for r in rows:
+            r["quote_found"] = quote_found(r, scenarios[r["id"]], chunks)
             r["checks"] = score(scenarios[r["id"]], r)
         by_id = defaultdict(list)
         for r in rows:
