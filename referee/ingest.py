@@ -6,7 +6,7 @@ from pathlib import Path
 from pypdf import PdfReader
 
 URL = "https://ncaaorg.s3.amazonaws.com/championships/sports/football/rules/PRMFB_RulesBook.pdf"
-DATA = Path(__file__).resolve().parents[2] / "data"
+DATA = Path(__file__).resolve().parents[1] / "data"
 PDF = DATA / "rulebook.pdf"
 CHUNKS = DATA / "chunks.jsonl"
 
@@ -56,12 +56,28 @@ def split_rules(texts, first, last):
                 continue
             if m := SECTION.match(line):
                 section = m[1].replace(" ", "")
-                current = {"id": f"{rule}-{section}", "kind": "rule", "page": page + 1, "lines": [line]}
+                current = {
+                    "id": f"{rule}-{section}",
+                    "kind": "rule",
+                    "page": page + 1,
+                    "lines": [line],
+                }
                 chunks.append(current)
                 continue
             if (m := ARTICLE.match(line)) and section:
-                title = current["lines"].pop() if current and len(current["lines"]) > 1 and is_title(current["lines"][-1]) else None
-                current = {"id": f"{rule}-{section}-{m[1].replace(' ', '')}", "kind": "rule", "page": page + 1, "lines": [title, line] if title else [line]}
+                title = (
+                    current["lines"].pop()
+                    if current
+                    and len(current["lines"]) > 1
+                    and is_title(current["lines"][-1])
+                    else None
+                )
+                current = {
+                    "id": f"{rule}-{section}-{m[1].replace(' ', '')}",
+                    "kind": "rule",
+                    "page": page + 1,
+                    "lines": [title, line] if title else [line],
+                }
                 chunks.append(current)
                 continue
             if current:
@@ -76,12 +92,28 @@ def split_approved(texts, first):
             line = line.strip()
             if line.startswith("Term Page"):
                 return chunks
-            if not line or PAGE_LABEL.search(line) or NEXT_TITLE.search(line) or RULE.match(line) or SECTION.match(line) or CAPS_HEADING.fullmatch(line):
+            if (
+                not line
+                or PAGE_LABEL.search(line)
+                or NEXT_TITLE.search(line)
+                or RULE.match(line)
+                or SECTION.match(line)
+                or CAPS_HEADING.fullmatch(line)
+            ):
                 continue
             if m := APPROVED.match(line):
-                while current and len(current["lines"]) > 1 and not current["lines"][-1].endswith((".", ")", ":", "]")):
+                while (
+                    current
+                    and len(current["lines"]) > 1
+                    and not current["lines"][-1].endswith((".", ")", ":", "]"))
+                ):
                     current["lines"].pop()
-                current = {"id": f"A.R. {m[1]}", "kind": "approved_ruling", "page": page + 1, "lines": [line]}
+                current = {
+                    "id": f"A.R. {m[1]}",
+                    "kind": "approved_ruling",
+                    "page": page + 1,
+                    "lines": [line],
+                }
                 chunks.append(current)
                 continue
             if current:
@@ -96,14 +128,18 @@ def main():
         print(f"Downloaded the rulebook to {PDF}")
     texts = pages(PDF)
     rules_start, standards_start, interpretations_start = part_starts(texts)
-    chunks = split_rules(texts, rules_start, standards_start) + split_approved(texts, interpretations_start)
+    chunks = split_rules(texts, rules_start, standards_start) + split_approved(
+        texts, interpretations_start
+    )
     chunks = [c for c in chunks if len(c["lines"]) > 1]
     with open(CHUNKS, "w", encoding="utf-8") as f:
         for chunk in chunks:
             lines = chunk.pop("lines")
             f.write(json.dumps({**chunk, "text": "\n".join(lines)}) + "\n")
     rules = sum(c["kind"] == "rule" for c in chunks)
-    print(f"Wrote {rules} rule chunks and {len(chunks) - rules} approved-ruling chunks to {CHUNKS}")
+    print(
+        f"Wrote {rules} rule chunks and {len(chunks) - rules} approved-ruling chunks to {CHUNKS}"
+    )
 
 
 if __name__ == "__main__":

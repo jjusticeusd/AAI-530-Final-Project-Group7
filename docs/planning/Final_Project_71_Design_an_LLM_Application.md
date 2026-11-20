@@ -129,9 +129,7 @@ The presentation should make clear:
   * what the user or stakeholder would experience;
   * how the LLM is integrated;
   * how prompts or instructions shape the output;
-  * what context, evaluation, or safety features are included;
-  * what happens in at least one representative test case or scenario;
-  * what limitations or failure modes remain; and
+  * what context, evaluation, or safety features are included;the p
   * how the project could be improved in future development.
 
 

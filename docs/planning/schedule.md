@@ -1,6 +1,6 @@
 # Final Project Schedule: NCAA Football Referee Assistant (Group 7)
 
-Team: Jason Justice (team lead, build), Timothy Hays (football rules and evaluation). Full plan: `docs/plan.md` in the team repo.
+Team: Jason Justice (team lead, build), Timothy Hays (football rules and evaluation). Full plan: `docs/planning/plan.md` in the team repo.
 
 Target: project done Mon 11/30 (end of Module 6). Canvas due date: Mon 12/7, 11:59 PM PT. Each week ends Monday at 11:59 PM PT.
 
@@ -13,7 +13,7 @@ Team split is still open. Each week lists tasks for both options:
 | Task | Option 1 | Option 2 |
 |---|---|---|
 | Pick the team split and confirm scope (rules Q&A plus described plays) | Both | Both |
-| Find the official NCAA rulebook PDF and confirm the edition | Timothy | Both |
+| Find the official NCAA rulebook PDF and confirm the edition. Done: 2026 NCAA Football Rules and Interpretations | Timothy | Both |
 | Sign up for free API keys: Groq at https://console.groq.com/keys and OpenRouter at https://openrouter.ai/keys. Put them in `.env`, never in git | Timothy | Both |
 | Set up the repo and rulebook pipeline: scaffold, backends from `playground/rules_referee.py`, rulebook download and ingest by rule number | Jason | Both |
 | **Submit the M3 check-in** (Canvas survey, 5 pts) | Both | Both |
@@ -22,10 +22,10 @@ Team split is still open. Each week lists tasks for both options:
 
 | Task | Option 1 | Option 2 |
 |---|---|---|
-| Rule search, structured ruling, and citation check, working from the CLI | Jason | Both |
-| Add embeddings to rule search and combine them with the keyword scores; rerun the 17 rule-search test questions | Jason | Both |
-| System prompt v1, with one example ruling in the JSON format | Jason, Timothy reviews | Both |
-| Draft 30-40 test questions with correct rulings: rules questions, described plays, penalties, edge cases, out-of-scope, judgment calls. Mark about a third as dev (used to fix prompts) and keep the rest as the test set | Timothy | Both |
+| Rule search, structured ruling, and citation check, working from the CLI. Done | Jason | Both |
+| Try embeddings in rule search and rerun the 17 rule-search test questions. Done: dropped, BM25 scored 13/17 and hybrid 11/17 (`docs/appendix.md`) | Jason | Both |
+| System prompt v1, with one example ruling in the JSON format. Done: `referee/prompts/v1.md` | Jason, Timothy reviews | Both |
+| Draft 30-40 test questions with correct rulings: rules questions, described plays, penalties, edge cases, out-of-scope, judgment calls. Include adversarial and harm cases (hidden instructions, pressure to call a dangerous hit legal, betting or other out-of-scope asks, too little detail to rule; drafts t01-t06 are in). Mark about a third as dev (used to fix prompts) and keep the rest as the test set | Timothy | Both |
 | Extend the list of football slang and the rulebook words it maps to (lateral = backward pass, onside = free kick, OT = extra period, ...) so rule search finds the right sections | Timothy | Both |
 | Ask the instructor whether the project needs model training, or whether prompting plus retrieval is enough | Jason | Jason |
 | **Submit the M4 check-in** (goal, users, model, prompt strategy, AI tools, progress) **and the status form** (description, dataset: rulebook edition, pages, chunk count, test set size; meetings in the last two weeks; each member's contributions) | Both | Both |
@@ -34,10 +34,10 @@ Team split is still open. Each week lists tasks for both options:
 
 | Task | Option 1 | Option 2 |
 |---|---|---|
-| Streamlit app (chat, sidebar model picker, citations panel, review flag), run with uv | Jason | Both |
-| Eval script and the first run on all models: each question 3 times, exact match on call/yards/spot, citation check, consistency, latency | Jason | Both |
-| Write a 3-5 item grading rubric (correct, useful, clear, safe), grade the first run, and list the failures | Timothy | Both |
-| Prompt v2 from the dev-set failures only, then save both runs | Both | Both |
+| Streamlit app (chat, sidebar model picker, citations panel, review flag), run with uv. Done | Jason | Both |
+| Eval script and the first run: exact match on call/yards/spot, citation check, consistency, latency. Done: three models (one per provider), 1 run each, `eval/results/v1_rag_dev_summary.md`. v1 has one run, so it shows no consistency score; v2 runs 3 times | Jason | Both |
+| Review the 1-3 rubric draft (`eval/rubric.md`: correct, useful, clear, safe), grade the first run before seeing any judge scores, and list the failures. The sheet is ready: `eval/results/v1_rag_dev_grading.csv` | Timothy | Both |
+| Prompt v2 from the dev-set failures only, then save both runs. Started: `referee/prompts/v2.md` and rule-search fixes | Both | Both |
 | **Submit the M5 check-in.** Individual A5.1 is also due 11/23 | Both | Both |
 
 ## Module 6: Tue 11/24 to Mon 11/30 (Thanksgiving is 11/26)
@@ -45,11 +45,11 @@ Team split is still open. Each week lists tasks for both options:
 | Task | Option 1 | Option 2 |
 |---|---|---|
 | Final eval on the test set and comparison table (hosted vs local: accuracy, citations, consistency, latency, cost, local model memory and quantization) | Jason | Both |
-| Optional: an LLM judge scores the same answers; compare with Timothy's grades | Jason | Both |
+| LLM judge (Groq `qwen/qwen3.8-27b`, a different family from the eval models) scores the same answers with Timothy's rubric; compare with his grades (`eval/judge.py --compare`) | Jason | Both |
 | README and project documentation | Jason (tech), Timothy (users, football) | Both |
 | Prompt and testing appendix | Both | Both |
 | AI use and ethics reflection | Both | Both |
-| Record the presentation (5 min or less intro, then 5 min or more demo) | Timothy leads the intro, Jason the demo | Both |
+| Record the presentation (5 min or less intro, then 5 min or more demo). Script and the before-recording checklist: `docs/presentation.md` | Timothy leads the intro, Jason the demo | Both |
 | **Submit the M6 check-in. The project is done.** Individual A6.1 is also due 11/30 | Both | Both |
 
 ## Module 7: Tue 12/1 to Mon 12/7 (buffer)
@@ -57,7 +57,7 @@ Team split is still open. Each week lists tasks for both options:
 | Task | Option 1 | Option 2 |
 |---|---|---|
 | Fixes, re-record if needed, fresh-clone test of the README, and check the git history for keys or the PDF | Both | Both |
-| Check every rubric item against `docs/Final_Project_71_Design_an_LLM_Application.md` in the team repo | Both | Both |
+| Check every rubric item against `docs/planning/Final_Project_71_Design_an_LLM_Application.md` in the team repo | Both | Both |
 | **Submit the final project as team lead (12/7)** | Jason | Jason |
 | **Submit the peer evaluation (12/7)** | Both | Both |
 
