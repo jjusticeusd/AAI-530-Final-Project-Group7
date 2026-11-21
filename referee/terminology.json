@@ -767,6 +767,46 @@
       ],
       "rule_hints": [],
       "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "conversion",
+      "expand_to": [
+        "try"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "two minute warning",
+      "expand_to": [
+        "two-minute timeout"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "quarterback",
+      "expand_to": [
+        "passer"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "qb",
+      "expand_to": [
+        "passer"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
+    },
+    {
+      "phrase": "allowed",
+      "expand_to": [
+        "legal"
+      ],
+      "rule_hints": [],
+      "caution": "Retrieval expansion only; inspect the actual play facts and applicable rule conditions before making a ruling."
     }
   ]
 }

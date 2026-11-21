@@ -1,9 +1,0 @@
-{
-  "source_url": "https://ncaaorg.s3.amazonaws.com/championships/sports/football/rules/PRMFB_RulesBook.pdf",
-  "edition": "2026 NCAA Football Rules Book",
-  "download_date_local": "2026-11-13",
-  "pdf_page_count": 260,
-  "sha256": "2a9e63b038b6efc70ad846487f33fdda175993c2229c911c3e06291ec74a9dd5",
-  "reference_pipeline": "schedule branch src/referee/ingest.py at tree 3fadad2356e33fa180fa19f38c12162967342562; used locally for article identification",
-  "note": "URL is mutable. Re-download must match hash or trigger source and answer-key review. PDF is local-only."
-}

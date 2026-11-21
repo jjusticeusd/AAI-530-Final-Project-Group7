@@ -14,24 +14,6 @@ TERMS = {
         (Path(__file__).parent / "terminology.json").read_text(encoding="utf-8")
     )["entries"]
 }
-SYNONYMS = {
-    "lateral": "backward pass",
-    "onside": "free kick restraining line",
-    "overtime": "extra period",
-    "ot": "extra period",
-    "quarter": "period",
-    "pi": "pass interference",
-    "dpi": "defensive pass interference",
-    "opi": "offensive pass interference",
-    "extra point": "try",
-    "pat": "try",
-    "conversion": "try",
-    "pick six": "intercept touchdown",
-    "two minute warning": "two-minute timeout",
-    "quarterback": "passer",
-    "qb": "passer",
-    "allowed": "legal",
-}
 STOPWORDS = set(
     "a allow allowed an and are can do does for how i if in is it many much of on one or play say says the to what when where which who why with".split()
 )
@@ -68,8 +50,7 @@ def has(phrase, text):
 
 def expand(question):
     lowered = question.lower()
-    terms = {**TERMS, **SYNONYMS}
-    return " ".join([question, *(v for k, v in terms.items() if has(k, lowered))])
+    return " ".join([question, *(v for k, v in TERMS.items() if has(k, lowered))])
 
 
 def correct(word, vocab):
