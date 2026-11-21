@@ -22,7 +22,7 @@ def tokens(s):
     return re.findall(r'[a-z0-9]+', s.lower())
 
 def expand(question):
-    terms = json.loads((ROOT.parent/'src/referee/terminology.json').read_text())['entries']
+    terms = json.loads((ROOT.parent/'referee/terminology.json').read_text())['entries']
     additions=[]
     for term in terms:
         if re.search(r'(?<!\w)'+re.escape(term['phrase'])+r'(?!\w)',question,re.I):
@@ -108,7 +108,7 @@ def generate(question,docs,model,k=4):
     prompt=(ROOT/'prompts/system_v2.txt').read_text()
     context=json.dumps(evidence,ensure_ascii=False)
     payload={'model':model,'temperature':0,'reasoning_effort':'low','max_completion_tokens':2200,'response_format':{'type':'json_object'},'messages':[{'role':'system','content':prompt},{'role':'user','content':json.dumps({'question':question,'evidence':evidence},ensure_ascii=False)}]}
-    record={'question':question,'provider':'Groq','model':model,'prompt_version':'v2','prompt_hash':digest(prompt.encode()),'terminology_hash':digest((ROOT.parent/'src/referee/terminology.json').read_bytes()),'corpus_hash':digest(json.dumps(docs,sort_keys=True).encode()),'pipeline_hash':digest(Path(__file__).read_bytes()),'retrieval_k':k,'retrieval_mode':'BM25_rule_only','retrieved_chunk_ids':[x['id'] for x in evidence],'retrieved_context_hash':digest(context.encode()),'retrieved_evidence':evidence,'attempts':0,'error':None,'raw_output':None,'parsed_output':None,'validation_errors':[],'actual_cost_usd':None}
+    record={'question':question,'provider':'Groq','model':model,'prompt_version':'v2','prompt_hash':digest(prompt.encode()),'terminology_hash':digest((ROOT.parent/'referee/terminology.json').read_bytes()),'corpus_hash':digest(json.dumps(docs,sort_keys=True).encode()),'pipeline_hash':digest(Path(__file__).read_bytes()),'retrieval_k':k,'retrieval_mode':'BM25_rule_only','retrieved_chunk_ids':[x['id'] for x in evidence],'retrieved_context_hash':digest(context.encode()),'retrieved_evidence':evidence,'attempts':0,'error':None,'raw_output':None,'parsed_output':None,'validation_errors':[],'actual_cost_usd':None}
     started=time.monotonic()
     for attempt in range(2):
         record['attempts']+=1
@@ -156,7 +156,7 @@ def main():
     if args.output and args.output.exists():
         for line in args.output.read_text().splitlines():
             rec=json.loads(line)
-            if rec.get('error') is None and rec.get('model')==args.model and rec.get('prompt_hash')==digest((ROOT/'prompts/system_v2.txt').read_bytes()) and rec.get('corpus_hash')==digest(json.dumps(docs,sort_keys=True).encode()) and rec.get('terminology_hash')==digest((ROOT.parent/'src/referee/terminology.json').read_bytes()) and rec.get('question')==next((x['question'] for x in inputs if x['id']==rec.get('case_id')),None) and rec.get('pipeline_hash')==digest(Path(__file__).read_bytes()):done.add(rec['case_id'])
+            if rec.get('error') is None and rec.get('model')==args.model and rec.get('prompt_hash')==digest((ROOT/'prompts/system_v2.txt').read_bytes()) and rec.get('corpus_hash')==digest(json.dumps(docs,sort_keys=True).encode()) and rec.get('terminology_hash')==digest((ROOT.parent/'referee/terminology.json').read_bytes()) and rec.get('question')==next((x['question'] for x in inputs if x['id']==rec.get('case_id')),None) and rec.get('pipeline_hash')==digest(Path(__file__).read_bytes()):done.add(rec['case_id'])
     for case in inputs:
         if case['id'] in done:continue
         if args.retrieve_only:

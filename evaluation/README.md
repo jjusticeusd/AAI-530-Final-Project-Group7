@@ -5,7 +5,7 @@ Review branch contribution. This standalone prototype does not replace Jason's s
 ## What is here
 
 - **40 approved scenarios:** 30 development, 10 reserved final tests. IDs and file hashes are in `eval/split_manifest.json`. Original questions/answers/notes were approved by Timothy on November 16, 2026.
-- Rule-only BM25 retrieval with vocabulary expansion from the canonical `../src/referee/terminology.json`.
+- Rule-only BM25 retrieval with vocabulary expansion from the canonical `../referee/terminology.json`.
 - v1/v2 prompt files, Groq connection/CLI scripts, bounded development runner, and citation/response validators.
 - A completed **30-case v2 development run** using Groq `openai/gpt-oss-120b`; saved outputs and side-by-side review.
 - Seven local tests for corpus isolation, retrieval and validation behavior.
@@ -47,3 +47,7 @@ The report builder currently reads the supplied `groq_dev30_v2_120b.jsonl`; adap
 Only the development inputs enter generation. Answer keys are used by the separate report/scoring step. The reserved tests are committed for review and future scoring but must not enter retrieval, few-shot examples or prompt tuning. Rule-only retrieval excludes Approved Rulings; the toe/heel interpretation case exposes a limitation of that corpus choice.
 
 JSON-object mode does not enforce the declared field types. Existing validators flag strings where citation objects or integers were required; exact excerpt checks also flag altered punctuation or ellipses. A citation that exists is not necessarily supported. Next work: explicit structured-output schema, improved article retrieval, enforcement checking, human grading, and a shared integration interface before UI work. No final-test run, hosted/local comparison or final-submission claim is included here.
+
+## Current application integration
+
+Jason’s current implementation is in `referee/`. For future model evaluation, use `eval/scenarios_timothy.csv` with the current runner as documented in `../eval/README.md`. This folder preserves the approved source keys and historical prototype; it is not the active application implementation.
