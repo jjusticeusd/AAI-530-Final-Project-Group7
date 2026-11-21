@@ -4,10 +4,11 @@ Compiled by Timothy Hays with AI assistance for the NCAA Football Referee projec
 
 On special-teams plays, use **kicking team** and **receiving team**, including player numbers. Use offensive/defensive labels for ordinary scrimmage plays.
 
-Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology.json). This file is ready for a retrieval loader; it does not itself implement query expansion.
+Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology.json). `referee/retrieve.py` adds these terms to the question before searching.
 
 | Fan/player wording | Rulebook search wording |
 |---|---|
+| allowed | legal |
 | blindside hit | blind-side block |
 | block in the back | illegal block in the back |
 | bobble | catch; control; possession |
@@ -15,6 +16,7 @@ Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology
 | chop block | chop block; high-low combination block |
 | clipping | clipping |
 | clock the ball | forward pass to conserve time; illegal forward pass |
+| conversion | try |
 | cut block | blocking below the waist |
 | down by contact | dead ball; ball declared dead |
 | downed the punt | touching; recovery; ball declared dead |
@@ -64,7 +66,9 @@ Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology
 | picked off | interception |
 | pitch | backward pass; forward and backward pass |
 | pushed off | offensive pass interference |
+| QB | passer |
 | quarter | period |
+| quarterback | passer |
 | roughing the QB | roughing the passer |
 | rub route | offensive pass interference; blocking |
 | scoop and score | fumble recovery; touchdown |
@@ -82,6 +86,7 @@ Machine-readable vocabulary: [`referee/terminology.json`](../referee/terminology
 | too many men | substitution; more than eleven players |
 | touchback | touchback; free kick; scrimmage kick |
 | turnover on downs | new series; failure to reach the line to gain |
+| two minute warning | two-minute timeout |
 | two point conversion | try; touchdown on a try |
 | two-point conversion | try; touchdown on a try |
 | waved teammates away | invalid fair catch signal; no advance |

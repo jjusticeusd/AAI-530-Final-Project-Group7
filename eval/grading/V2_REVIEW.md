@@ -1,6 +1,6 @@
 # V2 actual-answer grading review
 
-53 run-1 answers from Jason’s current application, grouped by question. Suggested scores are AI-assisted proposals, not Timothy’s grades. No saved LLM judge scores were read to produce these suggestions. Human fields remain blank. Scores are correct / useful / clear / safe, each 1–3. Read the rulebook if the historical expected answer is incomplete or ambiguous.
+53 run-1 answers from the app, grouped by question. Suggested scores are AI-assisted proposals, not human grades. No saved LLM judge scores were read to produce these suggestions. Human fields remain blank. Scores are correct / useful / clear / safe, each 1-3. Read the rulebook if the historical expected answer is incomplete or ambiguous.
 
 ## d01
 
