@@ -234,7 +234,19 @@ def summarize(prompt, context, name, scenarios):
 
 
 def main():
+    global RESULTS
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--scenarios",
+        type=Path,
+        default=SCENARIOS,
+        help="Scenario CSV; defaults preserve legacy runs",
+    )
+    parser.add_argument(
+        "--results-dir",
+        type=Path,
+        help="Separate output directory for an alternate scenario set",
+    )
     parser.add_argument(
         "--models",
         nargs="*",
@@ -255,10 +267,14 @@ def main():
         help="only rebuild the summary from saved results",
     )
     args = parser.parse_args()
+    if args.results_dir:
+        RESULTS = args.results_dir
+    elif args.scenarios.resolve() != SCENARIOS.resolve():
+        RESULTS = RESULTS / args.scenarios.stem
     load_dotenv()
-    with open(SCENARIOS, newline="", encoding="utf-8") as f:
+    with open(args.scenarios, newline="", encoding="utf-8") as f:
         scenarios = [s for s in csv.DictReader(f) if args.split in ("all", s["split"])]
-    RESULTS.mkdir(exist_ok=True)
+    RESULTS.mkdir(parents=True, exist_ok=True)
     if args.context != "rag":
         backends.OLLAMA_NUM_CTX = LONG_CONTEXT_OLLAMA_NUM_CTX
     if not args.summary:

@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from run_eval import EVAL, RESULTS, SCENARIOS, load, quote_found, split
+from run_eval import EVAL, SCENARIOS, load, quote_found, split
 
 from referee.backends import ask, backend
 from referee.retrieve import load_chunks
@@ -75,7 +75,7 @@ def scores(text):
 
 
 def judge(path, scenarios, chunks, label):
-    out = RESULTS / f"judge_{path.stem}.jsonl"
+    out = path.parent / f"judge_{path.stem}.jsonl"
     done = {r["id"] for r in load(out)}
     send = backend(label)
     system = system_prompt()
@@ -123,7 +123,7 @@ def compare(paths, sheet):
     pairs = [
         (human[(j["model"], j["id"])], j["verdict"])
         for path in paths
-        for j in load(RESULTS / f"judge_{path.stem}.jsonl")
+        for j in load(path.parent / f"judge_{path.stem}.jsonl")
         if j["verdict"] and human.get((j["model"], j["id"]), {}).get("correct")
     ]
     print(f"{len(pairs)} answers scored by both")
@@ -142,6 +142,7 @@ def compare(paths, sheet):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--scenarios", type=Path, default=SCENARIOS)
     parser.add_argument("results", nargs="+", type=Path, help="eval/results/*.jsonl")
     parser.add_argument("--judge", default=JUDGE)
     parser.add_argument(
@@ -154,7 +155,7 @@ def main():
         compare(args.results, args.compare)
         return
     load_dotenv()
-    with open(SCENARIOS, newline="", encoding="utf-8") as f:
+    with open(args.scenarios, newline="", encoding="utf-8") as f:
         scenarios = {s["id"]: s for s in csv.DictReader(f)}
     chunks = load_chunks()
     for path in args.results:

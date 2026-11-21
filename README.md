@@ -79,3 +79,7 @@ See [slang to rulebook wording](docs/slang_to_rulebook.md) for common player, co
 - Text only, English only, NCAA rules only.
 
 See section 8 of the [report](docs/report.md) for details.
+
+## Timothy evaluation work
+
+The [approved 30-development/10-final-test package](evaluation/README.md) and historical local prototype are preserved for provenance. Use the current `referee/` application for integration. [Evaluation reconciliation and grading](eval/README.md) explains how the approved cases and historical results are kept separate.
