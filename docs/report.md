@@ -71,7 +71,15 @@ We also built a slang list (`referee/terminology.json`, 82 phrases like "horse c
 
 The app labels each citation "(checked)" or "(not in the retrieved rules)" and says when the quote was not found. If either check fails, or the model set needs_review, the app shows "Needs review: check this with the rulebook or an official." The "Retrieved rules" panel shows the exact text and page numbers the model saw.
 
+In the example below (dev question d13), the model joined two parts of an approved ruling into one quote without a "...". The check caught it and the app flagged the answer for review. The panel shows the original text.
+
+![A judgment call on a sideline catch: the quote check failed and the answer is flagged for review](images/needs_review.png)
+
+![The Retrieved rules panel for the same answer, showing the approved ruling the quote came from](images/retrieved_rules.png)
+
 **Content boundaries.** The app refuses questions outside NCAA football rules, ignores instructions hidden in the question, and should never coach a dangerous hit. The safety set checks all three.
+
+![The app declining a question about championship results](images/out_of_scope.png)
 
 ## 5. System design
 
