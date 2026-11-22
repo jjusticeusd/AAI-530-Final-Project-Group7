@@ -12,6 +12,16 @@ from openrouter.errors import OpenRouterError
 
 GROQ_MODELS = ["openai/gpt-oss-120b"]
 OPENROUTER_MODELS = ["nvidia/nemotron-3-ultra-550b-a55b:free"]
+OPENROUTER_OPTIONS = {
+    "openai/gpt-oss-120b": {
+        "reasoning_effort": "low",
+        "provider": {"order": ["groq"], "allow_fallbacks": False},
+    },
+    "qwen/qwen3.8-27b": {
+        "max_tokens": 10000,
+        "provider": {"order": ["deepinfra"], "allow_fallbacks": False},
+    },
+}
 OLLAMA_MODELS = {"gemma3:12b": {"temperature": 0}}
 OLLAMA_NUM_CTX = 16384
 MAX_OUTPUT_TOKENS = 3500
@@ -49,7 +59,7 @@ def ollama_models():
 
 def checked(text, finish_reason):
     if finish_reason == "length":
-        print(f"  (answer cut off at the {MAX_OUTPUT_TOKENS}-token output limit)")
+        print("  (answer cut off at the output limit)")
     return text
 
 
@@ -75,7 +85,10 @@ def make_openrouter(model):
 
     def send(messages):
         response = client.chat.send(
-            model=model, messages=messages, temperature=0, max_tokens=MAX_OUTPUT_TOKENS
+            model=model,
+            messages=messages,
+            temperature=0,
+            **{"max_tokens": MAX_OUTPUT_TOKENS, **OPENROUTER_OPTIONS.get(model, {})},
         )
         choice = response.choices[0]
         return checked(choice.message.content, choice.finish_reason)
@@ -131,7 +144,7 @@ def error_headers(e):
     )
 
 
-def ask(send, messages):
+def ask(send, messages, max_wait=None):
     for attempt in range(1, RETRIES + 1):
         try:
             return send(messages)
@@ -141,6 +154,9 @@ def ask(send, messages):
                 print(f"  (request rejected: HTTP {status})")
                 return None
             wait = float(error_headers(e).get("retry-after", COOLDOWN))
+            if max_wait is not None and wait > max_wait:
+                print(f"  (busy for {wait:.0f}s, giving up)")
+                return None
             print(f"  (busy, retrying in {wait:.0f}s... {attempt}/{RETRIES})")
             time.sleep(wait)
     return None

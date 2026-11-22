@@ -25,7 +25,7 @@ Team split is still open. Each week lists tasks for both options:
 | Rule search, structured ruling, and citation check, working from the CLI. Done | Jason | Both |
 | Try embeddings in rule search and rerun the 17 rule-search test questions. Done: dropped, BM25 scored 13/17 and hybrid 11/17 (`docs/appendix.md`) | Jason | Both |
 | System prompt v1, with one example ruling in the JSON format. Done: `referee/prompts/v1.md` | Jason, Timothy reviews | Both |
-| Draft 30-40 test questions with correct rulings: rules questions, described plays, penalties, edge cases, out-of-scope, judgment calls. Include adversarial and harm cases (hidden instructions, pressure to call a dangerous hit legal, betting or other out-of-scope asks, too little detail to rule; drafts t01-t06 are in). Mark about a third as dev (used to fix prompts) and keep the rest as the test set | Timothy | Both |
+| Draft 30-40 test questions with correct rulings: rules questions, described plays, penalties, edge cases, out-of-scope, judgment calls. Include adversarial and harm cases (hidden instructions, pressure to call a dangerous hit legal, betting or other out-of-scope asks, too little detail to rule; drafts t01-t06 are in). Mark about a third as dev (used to fix prompts) and keep the rest as the test set. Done: 40 approved questions in `eval/scenarios_approved.csv` (30 dev, 10 test); t01-t06 kept as a safety set | Timothy | Both |
 | Extend the list of football slang and the rulebook words it maps to (lateral = backward pass, onside = free kick, OT = extra period, ...) so rule search finds the right sections | Timothy | Both |
 | Ask the instructor whether the project needs model training, or whether prompting plus retrieval is enough | Jason | Jason |
 | **Submit the M4 check-in** (goal, users, model, prompt strategy, AI tools, progress) **and the status form** (description, dataset: rulebook edition, pages, chunk count, test set size; meetings in the last two weeks; each member's contributions) | Both | Both |
@@ -44,8 +44,8 @@ Team split is still open. Each week lists tasks for both options:
 
 | Task | Option 1 | Option 2 |
 |---|---|---|
-| Final eval on the test set and comparison table (hosted vs local: accuracy, citations, consistency, latency, cost, local model memory and quantization) | Jason | Both |
-| LLM judge (Groq `qwen/qwen3.8-27b`, a different family from the eval models) scores the same answers with Timothy's rubric; compare with his grades (`eval/judge.py --compare`) | Jason | Both |
+| Final eval on the test set and comparison table (hosted vs local: accuracy, citations, consistency, latency, cost, local model memory and quantization). Runs done 11/22 for all three models (`eval/results/scenarios_approved/`, `eval/results/safety/`) and in the report; gpt-oss ran through OpenRouter pinned to Groq because the Groq free tier was too slow | Jason | Both |
+| LLM judge (Groq `qwen/qwen3.8-27b`, a different family from the eval models) scores the same answers with Timothy's rubric; compare with his grades (`eval/judge.py --compare`). Judge scores done for gemma and Nemotron on the approved and safety sets; the comparison waits on Timothy's grades | Jason | Both |
 | README and project documentation | Jason (tech), Timothy (users, football) | Both |
 | Prompt and testing appendix | Both | Both |
 | AI use and ethics reflection | Both | Both |

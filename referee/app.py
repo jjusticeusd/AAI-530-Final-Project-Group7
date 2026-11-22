@@ -7,6 +7,7 @@ from referee.ruling import rule
 
 st.set_page_config(page_title="NCAA Football Referee")
 AVATARS = {"user": ":material/sports_football:", "assistant": ":material/sports:"}
+MAX_WAIT = 10
 
 
 @st.cache_resource
@@ -122,7 +123,7 @@ if question := st.chat_input("Ask a rules question or describe a play"):
             send = backend(label)
             result = rule(
                 rules,
-                lambda m: ask(send, m),
+                lambda m: ask(send, m, max_wait=MAX_WAIT),
                 [{"role": m["role"], "content": m["content"]} for m in history],
             )
         if result["raw"] is None:

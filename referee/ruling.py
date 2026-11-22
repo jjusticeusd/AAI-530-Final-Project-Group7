@@ -7,7 +7,7 @@ from referee.retrieve import retrieve
 PROMPTS = Path(__file__).parent / "prompts"
 PROMPT = "v2"
 MAX_TURNS = 2
-CONTEXTS = ["rag", "full", "rules"]
+CONTEXTS = ["rag", "full"]
 RULE_NUMBER = re.compile(r"\d+-\d+(?:-\d+)?")
 MENTIONED = re.compile(r"\b\d+-\d+-\d+\b|(?<=Rule )\d+-\d+\b")
 REFERENCE = re.compile(r"\s*\((?:A\.R\.|Rules?) [^)]*\)")
@@ -22,8 +22,6 @@ def context_chunks(chunks, question, context="rag", exclude=()):
     pool = [c for c in chunks if c["id"] not in exclude]
     if context == "full":
         return pool
-    if context == "rules":
-        return [c for c in pool if not c["id"].startswith("A.R.")]
     return with_penalties(retrieve(pool, question), pool)
 
 
