@@ -2,18 +2,38 @@
 
 ## Scenario sets
 
-- `scenarios.csv`: the first 18 dev and 6 draft test questions (IDs d01-d18, t01-t06). The saved v1 and v2 results and grading sheets in `results/` use these IDs.
-- `scenarios_timothy.csv`: the 40 approved questions, 30 dev and 10 final test (IDs NCAA-001 to NCAA-041). Matching Approved Rulings are listed in `exclude` so the answer is not retrieved word for word; the underlying rules stay searchable.
+- `scenarios.csv`: the first set. 18 dev questions (d01-d18) and 6 safety questions (t01-t06).
+- `scenarios_approved.csv`: the 40 approved questions, 30 dev and 10 final test (IDs NCAA-001 to NCAA-041). Matching Approved Rulings are listed in `exclude` so the answer is not retrieved word for word; the underlying rules stay searchable. `penalty_yards` is blank on no-foul plays and on NCAA-017 (a DPI spot foul walked off 8 yards), because the app reports the yards on the rule's PENALTY line, or null when there is no foul.
+- `retrieval.csv`: 19 rule-search questions for `retrieval_eval.py` (no model calls).
+
+## Results
+
+| Folder | Set | Prompt | Models | Judge |
+|---|---|---|---|---|
+| `results/` | first set, dev | v1, v2 | gpt-oss (Groq), gemma, Nemotron | Groq qwen3.8-27b |
+| `results/` (`v1_full_*`) | first set, dev, whole rulebook instead of search | v1 | Nemotron | - |
+| `results/scenarios_approved/` | approved, dev and test | v2 | gpt-oss (OpenRouter, Groq host), gemma, Nemotron | OpenRouter qwen3.8-27b |
+| `results/safety/` | first set, safety (t01-t06) | v2 | gpt-oss (OpenRouter, Groq host), gemma, Nemotron | OpenRouter qwen3.8-27b |
+| `results/dropped/` | first set, dev | v1 | gpt-oss-20b, a smaller model we tried and dropped | - |
+
+Each folder has one `<prompt>_<context>_<model>.jsonl` file per model (3 runs per question), a `judge_*.jsonl` file per model next to it, and a `*_summary.md` table rebuilt by `--summary`.
 
 ## Run
 
 ```sh
-uv run python eval/run_eval.py --scenarios eval/scenarios_timothy.csv --split dev --prompt v2 --models "Groq / openai/gpt-oss-120b"
-uv run python eval/judge.py --scenarios eval/scenarios_timothy.csv eval/results/scenarios_timothy/v2_rag_groq-openai-gpt-oss-120b.jsonl
+uv run python eval/run_eval.py --scenarios eval/scenarios_approved.csv --split dev --prompt v2
+uv run python eval/run_eval.py --scenarios eval/scenarios_approved.csv --split dev --prompt v2 --summary
+uv run python eval/judge.py --scenarios eval/scenarios_approved.csv eval/results/scenarios_approved/v2_rag_*.jsonl
 ```
 
-A scenario file other than `scenarios.csv` writes to `results/<file name>/`, so earlier results are not overwritten. Judge output is written next to the results file it scores. Do not run `--split test` until the prompt and settings are final.
+A scenario file other than `scenarios.csv` writes to `results/<file name>/`, so earlier results are not overwritten. The safety set is `--scenarios eval/scenarios.csv --split test --results-dir eval/results/safety`. Judge output is written next to the results file it scores, and a rerun skips answers already judged. Do not run `--split test` until the prompt and settings are final.
 
-## Grading the saved v2 answers
+## Human grading
 
-`grading/V2_REVIEW.md` groups the 53 run-1 v2 answers by question, with the reference answer, the model output, and suggested 1-3 scores for correct, useful, clear and safe. `grading/v2_suggested_review.csv` has the same suggestions in `suggested_*` columns and blank `correct`, `useful`, `clear`, `safe` and `notes` columns for the final human grades. Suggestions are not grades until a human reviewer confirms them.
+Grade in `results/scenarios_approved/v2_rag_dev_grading.csv` and `v2_rag_test_grading.csv`: fill in `correct`, `useful`, `clear`, and `safe` (1-3, see `rubric.md`) and `notes` for each answer. `--summary` keeps entered grades when it rewrites the sheets. Then compare with the judge:
+
+```sh
+uv run python eval/judge.py eval/results/scenarios_approved/v2_rag_*.jsonl --compare eval/results/scenarios_approved/v2_rag_dev_grading.csv eval/results/scenarios_approved/v2_rag_test_grading.csv
+```
+
+`grading/` holds an earlier review of the first set's v2 answers with AI-suggested scores. It is not the grading sheet.

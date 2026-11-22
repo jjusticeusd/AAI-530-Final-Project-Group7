@@ -39,7 +39,7 @@ CHECKS = [
 ]
 GRADES = ["correct", "useful", "clear", "safe", "notes"]
 MODELS = [
-    "Groq / openai/gpt-oss-120b",
+    "OpenRouter / openai/gpt-oss-120b",
     "OpenRouter / nvidia/nemotron-3-ultra-550b-a55b:free",
     "Ollama / gemma3:12b",
 ]
@@ -139,9 +139,9 @@ def run(label, scenarios, chunks, prompt, runs, context):
                 seconds = round(time.perf_counter() - start, 2)
                 if result["raw"] is None:
                     print(
-                        f"  {label}: no answer for {s['id']} run {n}, stopping. Rerun later to continue."
+                        f"  {label}: no answer for {s['id']} run {n}, skipping it. Rerun later to retry."
                     )
-                    return
+                    break
                 row = {
                     "id": s["id"],
                     "run": n,
@@ -250,14 +250,14 @@ def main():
     parser.add_argument(
         "--models",
         nargs="*",
-        help='labels like "Groq / openai/gpt-oss-120b"; default is the MODELS list, skipping any that are not set up',
+        help='labels like "OpenRouter / openai/gpt-oss-120b"; default is the MODELS list, skipping any that are not set up',
     )
     parser.add_argument("--prompt", default=PROMPT)
     parser.add_argument(
         "--context",
         default="rag",
         choices=CONTEXTS,
-        help="rag: top search hits; full: every chunk; rules: every rule section, no approved rulings",
+        help="rag: top search hits; full: every chunk",
     )
     parser.add_argument("--split", default="dev", choices=["dev", "test", "all"])
     parser.add_argument("--runs", type=int, default=3)
@@ -279,7 +279,8 @@ def main():
         backends.OLLAMA_NUM_CTX = LONG_CONTEXT_OLLAMA_NUM_CTX
     if not args.summary:
         chunks = load_chunks()
-        for label in args.models or [m for m in MODELS if m in available()]:
+        ready = {m.split(" / ")[0] for m in available()}
+        for label in args.models or [m for m in MODELS if m.split(" / ")[0] in ready]:
             run(label, scenarios, chunks, args.prompt, args.runs, args.context)
     summarize(args.prompt, args.context, args.split, {s["id"]: s for s in scenarios})
 

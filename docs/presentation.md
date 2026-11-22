@@ -17,12 +17,11 @@ The spec asks the intro to cover each of these:
 
 ### Before recording
 
-- Run each demo question in the app once, on Nemotron (the default model). All demo questions are dev questions, so a miss can be fixed in the prompt. Keep test questions (t01-t06) out of the app until the final eval.
+- Run each demo question in the app once, on Nemotron (the default model). All demo questions are dev questions, so a miss can be fixed in the prompt. Keep the approved test questions and the safety questions (t01-t06) out of the demo.
 - Have gemma running in Ollama as a backup in case OpenRouter rate-limits mid-take.
 - Ask gemma one question in the 5 minutes before step 6. The first answer after it unloads takes about 19 seconds instead of 5.
 - Make sure no eval or judge run is going, so the summary step shows final numbers.
-- Open `referee/prompts/v2.md` and `eval/scenarios.csv` in the editor, and have a terminal ready in the repo.
-- Run the final eval on the test set, then use `--split test` in step 8 and update the numbers in the step 8 narration.
+- Open `referee/prompts/v2.md` and `eval/scenarios_approved.csv` in the editor, and have a terminal ready in the repo.
 - Timothy grades before the judge comparison. Fill in the agreement numbers from `judge.py --compare`. If he has not graded by recording day, cut the judge half of step 8.
 - Commit before recording. The summary command rewrites the summary and grading files (entered grades are kept), so a commit shows if anything shifts.
 
@@ -40,20 +39,20 @@ The spec asks the intro to cover each of these:
 |   |   |   | `A receiver gets one foot down near the sideline while bobbling the ball, then secures it as he goes out of bounds. Is it a catch?` | A judgment call gets flagged for review. |
 | 6 | 0:30 | Streamlit | Switch to `Ollama / gemma3:12b` and repeat the false start question | Same answer from a local model. Compare speed. |
 | 7 | 0:45 | Editor | `referee/prompts/v2.md` | Rules: answer only from the excerpts, return JSON, flag judgment calls. v2 added the "can I" line after every model called `can i tackle the quarterback` roughing the passer in testing. |
-| 8 | 1:00 | Editor, terminal | `eval/scenarios.csv`, then `uv run python eval/run_eval.py --split dev --prompt v2 --summary` | The test questions and expected answers. The summary rebuilds the results table from saved runs with no model calls: exact checks, citations, quote, review flag, consistency over 3 runs, and speed. Then `uv run python eval/judge.py eval/results/v1_rag_*.jsonl --compare eval/results/v1_rag_dev_grading.csv` for how often the judge agrees with Timothy. |
+| 8 | 1:00 | Editor, terminal | `eval/scenarios_approved.csv`, then `uv run python eval/run_eval.py --scenarios eval/scenarios_approved.csv --split test --prompt v2 --summary` | The approved questions and expected answers. The summary rebuilds the results table from saved runs with no model calls: exact checks, citations, quote, review flag, consistency over 3 runs, and speed. Then `uv run python eval/judge.py eval/results/scenarios_approved/v2_rag_*.jsonl --compare eval/results/scenarios_approved/v2_rag_dev_grading.csv eval/results/scenarios_approved/v2_rag_test_grading.csv` for how often the judge agrees with Timothy. |
 | 9 | 0:30 | Talk over the table | - | Known misses: gpt-oss refused the running-into-the-holder question even though the rule was retrieved, and some answers changed the enforcement spot between runs. |
 
 ### Step 8 narration
 
-Numbers below are from the v2 dev run. Replace them with the test set numbers before recording.
+Numbers below are from the v2 run on the approved test set. gpt-oss ran through OpenRouter (pinned to Groq) because Groq's free tier was too slow.
 
-> These are the 18 dev questions Timothy wrote. Each one has the expected call, yards, spot, and rule. Every model answered each question three times. This command rebuilds the results table from those saved answers, with no new model calls.
+> These are the 10 held-out test questions Timothy approved. Each one has the field position, the expected call, yards, spot, and rule. We didn't run them until the prompt was final. Every model answered each question three times. This command rebuilds the results table from those saved answers, with no new model calls.
 >
 > Foul, yards, spot, and rule are exact matches against Timothy's answers. Citations means every rule the model cited was actually in what search gave it. That's our check for made-up rules. Quote means the quote really appears in the rulebook. Consistent means the model gave the same ruling all three times.
 >
-> The local model, gemma at 12 billion parameters, got every foul and every yard count right. It gave the same answer every time and took about 8 seconds on my laptop. Nemotron, hosted, was the most accurate on the rules. It changed its answer on 3 of 18 questions, but mostly small changes, like labeling a question a rule question one time and a play question the next. gpt-oss was the least accurate and the slowest. Most of its misses come from one question where it had the right rule and still said it couldn't answer.
+> Nemotron, hosted, was the most accurate: every enforcement spot right, and 6 of 8 yard counts. The local model, gemma at 12 billion parameters, got every foul call right and gave the same answer every time in about 8 seconds on my laptop, but it left out the yards on two fouls. gpt-oss was the fastest, about a second per answer, but the least consistent, and twice it said the rules it was given did not cover the question. All three models cited the wrong rule on one kick question, even though the next snap was right.
 >
-> The code checks catch numbers, not reasoning. On one play, gpt-oss got 15 yards from the previous spot right but called the wrong foul. That's why Timothy also graded every answer, and why we checked how often an LLM judge agrees with him: [agreement numbers].
+> The code checks catch numbers, not reasoning. On a dev question, gemma called pass interference on a pass that was clearly uncatchable. That's why Timothy also graded every answer, and why we checked how often an LLM judge agrees with him: [agreement numbers].
 
 ### Future improvements (Jason, closing)
 

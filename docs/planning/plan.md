@@ -34,7 +34,8 @@ referee/
   ruling.py               retrieve -> prompt -> structured ruling -> verify
   prompts/                system prompt versions (v1, v2, ...) kept for the appendix; each includes one example ruling in the JSON format
   app.py                  Streamlit chat, sidebar model picker, retrieved-rules/citations panel, review flag
-eval/scenarios.csv        Timothy's test questions + correct rulings (call, yards, rule); split into a dev set (used to revise prompts) and a test set (final scoring only)
+eval/scenarios.csv        first 18 dev questions (d01-d18) + 6 safety questions (t01-t06)
+eval/scenarios_approved.csv  Timothy's 40 approved questions + correct rulings; 30 dev (used to revise prompts) and 10 test (final scoring only)
 eval/retrieval.csv        rule-search test questions, scored by eval/retrieval_eval.py
 eval/run_eval.py          runs every question on the three eval models (one per provider), --runs times; exact match on call/yards/spot, citation validity, consistency across runs, latency
 eval/results/             saved runs per prompt version (iteration evidence)

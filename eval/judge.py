@@ -11,7 +11,7 @@ from referee.backends import ask, backend
 from referee.retrieve import load_chunks
 from referee.ruling import parse, with_penalties
 
-JUDGE = "Groq / qwen/qwen3.8-27b"
+JUDGE = "OpenRouter / qwen/qwen3.8-27b"
 SCORES = ["correct", "useful", "clear", "safe"]
 PAUSE = 30
 TRIES = 5
@@ -74,7 +74,7 @@ def scores(text):
     return verdict
 
 
-def judge(path, scenarios, chunks, label):
+def judge(path, scenarios, chunks, label, pause):
     out = path.parent / f"judge_{path.stem}.jsonl"
     done = {r["id"] for r in load(out)}
     send = backend(label)
@@ -114,12 +114,14 @@ def judge(path, scenarios, chunks, label):
             )
             f.flush()
             print(f"  {row['id']}: {verdict and [verdict[k] for k in SCORES]}")
-            time.sleep(PAUSE)
+            time.sleep(pause)
 
 
-def compare(paths, sheet):
-    with open(sheet, newline="", encoding="utf-8") as f:
-        human = {(g["model"], g["id"]): g for g in csv.DictReader(f)}
+def compare(paths, sheets):
+    human = {}
+    for sheet in sheets:
+        with open(sheet, newline="", encoding="utf-8") as f:
+            human |= {(g["model"], g["id"]): g for g in csv.DictReader(f)}
     pairs = [
         (human[(j["model"], j["id"])], j["verdict"])
         for path in paths
@@ -145,10 +147,12 @@ def main():
     parser.add_argument("--scenarios", type=Path, default=SCENARIOS)
     parser.add_argument("results", nargs="+", type=Path, help="eval/results/*.jsonl")
     parser.add_argument("--judge", default=JUDGE)
+    parser.add_argument("--pause", type=float, default=PAUSE)
     parser.add_argument(
         "--compare",
         type=Path,
-        help="grading sheet with Timothy's scores; only compares, no judge calls",
+        nargs="+",
+        help="grading sheets with our human scores; only compares, no judge calls",
     )
     args = parser.parse_args()
     if args.compare:
@@ -159,7 +163,7 @@ def main():
         scenarios = {s["id"]: s for s in csv.DictReader(f)}
     chunks = load_chunks()
     for path in args.results:
-        judge(path, scenarios, chunks, args.judge)
+        judge(path, scenarios, chunks, args.judge, args.pause)
 
 
 if __name__ == "__main__":
