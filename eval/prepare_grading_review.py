@@ -162,6 +162,12 @@ notes = {
         ),
     },
 }
+notes["openrouter"]["d18"] = (
+    (2, 3, 3, 2),
+    "Core 15-yard penalty and enforcement explanation are useful, but the automatic-first-down condition for defensive fouls is omitted, consistent with the deduction for Groq.",
+    "9-1;9-1-7",
+)
+
 legacy = {x["id"]: x for x in csv.DictReader((r / "eval/scenarios.csv").open())}
 out = []
 for p in sorted((r / "eval/results").glob("v2_rag_*.jsonl")):
@@ -230,6 +236,8 @@ if existing.exists():
         old = saved.get((x["model"], x["id"]), {})
         for field in ["correct", "useful", "clear", "safe", "notes"]:
             x[field] = old.get(field, "")
+        if all(x[k] for k in ["correct", "useful", "clear", "safe"]):
+            x["review_status"] = "approved_by_timothy"
 folder = r / "eval/grading"
 folder.mkdir(exist_ok=True)
 with (folder / "v2_suggested_review.csv").open("w", newline="", encoding="utf-8") as f:
@@ -240,7 +248,7 @@ with (folder / "v2_suggested_review.csv").open("w", newline="", encoding="utf-8"
     json.dumps(out, indent=2, ensure_ascii=False) + "\n"
 )
 # Group by scenario so human can compare all models without seeing LLM judge scores.
-text = "# V2 actual-answer grading review\n\n53 run-1 answers from Jason’s current application, grouped by question. Suggested scores are AI-assisted proposals, not Timothy’s grades. No saved LLM judge scores were read to produce these suggestions. Human fields remain blank. Scores are correct / useful / clear / safe, each 1–3. Read the rulebook if the historical expected answer is incomplete or ambiguous.\n\n"
+text = "# V2 actual-answer grading review\n\n53 run-1 answers from Jason’s current application, grouped by question. Suggested scores are AI-assisted proposals, not Timothy’s grades. No saved LLM judge scores were read to produce these suggestions. Final human scores appear only where Timothy has supplied them. Scores are correct / useful / clear / safe, each 1–3. Read the rulebook if the historical expected answer is incomplete or ambiguous.\n\n"
 for ident in sorted(legacy):
     rows = [x for x in out if x["id"] == ident]
     if not rows:
@@ -257,8 +265,11 @@ for ident in sorted(legacy):
                 "suggested_safe",
             ]
         )
-        text += f"### {label}\n\n**Actual call:** {x['call']}\n\n**Actual explanation:** {x['explanation']}\n\n**Suggested scores:** {score}\n\n**Reason:** {x['suggestion_notes']}\n\n**Reference:** {x['reference_rules']}\n\n**Timothy:** [ ] Approve proposed scores [ ] Change: ____\n\n"
-(folder / "V2_REVIEW.md").write_text(text.rstrip() + "\n")
-print(
-    "Prepared 53 independent suggested reviews, with human scores blank; historical sheets unchanged."
-)
+        human = (
+            "/".join(x[k] for k in ["correct", "useful", "clear", "safe"])
+            if x["review_status"] == "approved_by_timothy"
+            else "Pending"
+        )
+        text += f"### {label}\n\n**Actual call:** {x['call']}\n\n**Actual explanation:** {x['explanation']}\n\n**Suggested scores:** {score}\n\n**Reason:** {x['suggestion_notes']}\n\n**Reference:** {x['reference_rules']}\n\n**Timothy final scores:** {human}\n\n"
+(folder / "V2_REVIEW.md").write_text("\n".join(line.rstrip() for line in text.splitlines()).rstrip() + "\n")
+print("Prepared review; preserved final human grades already supplied.")

@@ -48,41 +48,50 @@ class IntegrationChecks(unittest.TestCase):
         self.assertEqual(len(legacy), 24)
         self.assertTrue({c["id"] for c in legacy}.isdisjoint(c["id"] for c in approved))
 
-    def test_suggestions_do_not_become_human_grades(self):
+    def test_approved_human_grades_are_valid_and_separate_from_suggestions(self):
         with (ROOT / "eval/grading/v2_suggested_review.csv").open(newline="") as f:
             rows = list(csv.DictReader(f))
         self.assertEqual(len(rows), 53)
-        for c in rows:
-            self.assertEqual(c["review_status"], "pending_timothy_approval")
-            self.assertTrue(
-                all(c[k] == "" for k in ["correct", "useful", "clear", "safe"])
-            )
+        for row in rows:
+            self.assertEqual(row["review_status"], "approved_by_timothy")
             self.assertTrue(
                 all(
-                    int(c[k]) in (1, 2, 3)
-                    for k in [
-                        "suggested_correct",
-                        "suggested_useful",
-                        "suggested_clear",
-                        "suggested_safe",
-                    ]
+                    row[k] in {"1", "2", "3"}
+                    for k in ["correct", "useful", "clear", "safe"]
                 )
             )
+        groq_d03 = next(
+            row
+            for row in rows
+            if row["id"] == "d03" and row["model"].startswith("Groq /")
+        )
+        self.assertEqual(
+            [groq_d03[k] for k in ["correct", "useful", "clear", "safe"]],
+            ["1", "1", "1", "2"],
+        )
+        self.assertNotEqual(groq_d03["clear"], groq_d03["suggested_clear"])
 
-    def test_old_grading_sheets_unchanged_and_blank(self):
-        for name, count in [
-            ("v1_rag_dev_grading.csv", 48),
-            ("v2_rag_dev_grading.csv", 53),
-        ]:
-            with (ROOT / "eval/results" / name).open(newline="") as f:
-                rows = list(csv.DictReader(f))
-            self.assertEqual(len(rows), count)
-            self.assertTrue(
-                all(
-                    not any(c[k] for k in ["correct", "useful", "clear", "safe"])
-                    for c in rows
-                )
+    def test_final_grading_sheet_matches_user_approved_review(self):
+        def load(name):
+            with (ROOT / name).open(newline="") as f:
+                return {(row["model"], row["id"]): row for row in csv.DictReader(f)}
+
+        review = load("eval/grading/v2_suggested_review.csv")
+        final = load("eval/results/v2_rag_dev_grading.csv")
+        self.assertEqual(set(review), set(final))
+        for key in final:
+            self.assertEqual(
+                [final[key][k] for k in ["correct", "useful", "clear", "safe"]],
+                [review[key][k] for k in ["correct", "useful", "clear", "safe"]],
             )
+        v1 = load("eval/results/v1_rag_dev_grading.csv")
+        self.assertEqual(len(v1), 48)
+        self.assertTrue(
+            all(
+                not any(row[k] for k in ["correct", "useful", "clear", "safe"])
+                for row in v1.values()
+            )
+        )
 
 
 if __name__ == "__main__":

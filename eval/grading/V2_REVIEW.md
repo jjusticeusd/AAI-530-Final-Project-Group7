@@ -1,6 +1,6 @@
 # V2 actual-answer grading review
 
-53 run-1 answers from Jason’s current application, grouped by question. Suggested scores are AI-assisted proposals, not Timothy’s grades. No saved LLM judge scores were read to produce these suggestions. Human fields remain blank. Scores are correct / useful / clear / safe, each 1–3. Read the rulebook if the historical expected answer is incomplete or ambiguous.
+53 run-1 answers from Jason’s current application, grouped by question. Suggested scores are AI-assisted proposals, not Timothy’s grades. No saved LLM judge scores were read to produce these suggestions. Final human scores appear only where Timothy has supplied them. Scores are correct / useful / clear / safe, each 1–3. Read the rulebook if the historical expected answer is incomplete or ambiguous.
 
 ## d01
 
@@ -20,7 +20,7 @@
 
 **Reference:** 7-1-2;7-1-3
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/2/3/3
 
 ### Ollama
 
@@ -34,7 +34,7 @@
 
 **Reference:** 7-1-2;7-1-3
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -48,7 +48,7 @@
 
 **Reference:** 7-1-3;7-1-2
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d02
 
@@ -68,7 +68,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### Ollama
 
@@ -82,7 +82,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -96,7 +96,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d03
 
@@ -116,7 +116,7 @@
 
 **Reference:** 7-3-8;9-1-12
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/1/2
 
 ### Ollama
 
@@ -130,7 +130,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/2
 
 ### OpenRouter
 
@@ -144,7 +144,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d04
 
@@ -164,7 +164,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### Ollama
 
@@ -178,7 +178,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/1/2
 
 ### OpenRouter
 
@@ -192,7 +192,7 @@
 
 **Reference:** 7-3-8
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d05
 
@@ -212,7 +212,7 @@
 
 **Reference:** 9-1-16
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/3/3
 
 ### Ollama
 
@@ -226,7 +226,7 @@
 
 **Reference:** 9-1-16;10-2-5
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/2/3
 
 ### OpenRouter
 
@@ -240,7 +240,7 @@
 
 **Reference:** 9-1-16
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/3/3
 
 ## d06
 
@@ -260,7 +260,7 @@
 
 **Reference:** 9-1-16
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/2
 
 ### Ollama
 
@@ -274,7 +274,7 @@
 
 **Reference:** 9-1-16
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -288,7 +288,7 @@
 
 **Reference:** 9-1-16
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d07
 
@@ -308,7 +308,7 @@
 
 **Reference:** 8-1-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### Ollama
 
@@ -322,7 +322,7 @@
 
 **Reference:** 8-1-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -336,7 +336,7 @@
 
 **Reference:** 8-1-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d08
 
@@ -356,7 +356,7 @@
 
 **Reference:** 8-5-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/1
 
 ### Ollama
 
@@ -370,7 +370,7 @@
 
 **Reference:** 8-5-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/1
 
 ### OpenRouter
 
@@ -384,7 +384,7 @@
 
 **Reference:** 8-5-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d09
 
@@ -404,7 +404,7 @@
 
 **Reference:** 7-2-4-b-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/1
 
 ### Ollama
 
@@ -418,7 +418,7 @@
 
 **Reference:** 7-2-4-b-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/1
 
 ### OpenRouter
 
@@ -432,7 +432,7 @@
 
 **Reference:** 7-2-4
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d10
 
@@ -452,7 +452,7 @@
 
 **Reference:** 6-1-3
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/1
 
 ### Ollama
 
@@ -466,7 +466,7 @@
 
 **Reference:** 6-1-3
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 1/1/2/1
 
 ### OpenRouter
 
@@ -480,7 +480,7 @@
 
 **Reference:** 6-1-3
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d11
 
@@ -500,7 +500,7 @@
 
 **Reference:**
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### Ollama
 
@@ -514,7 +514,7 @@
 
 **Reference:**
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -528,7 +528,7 @@
 
 **Reference:**
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d12
 
@@ -548,7 +548,7 @@
 
 **Reference:** 8-1-1;prompt injection policy
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/2/2/1
 
 ### Ollama
 
@@ -562,7 +562,7 @@
 
 **Reference:** 8-1-1;prompt injection policy
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/2/2/1
 
 ### OpenRouter
 
@@ -576,7 +576,7 @@
 
 **Reference:** 8-1-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d13
 
@@ -596,7 +596,7 @@
 
 **Reference:** 2-4-3;4-2-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ### Ollama
 
@@ -610,7 +610,7 @@
 
 **Reference:** 2-4-3;4-2-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ### OpenRouter
 
@@ -624,7 +624,7 @@
 
 **Reference:** 2-4-3;4-2-1
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ## d14
 
@@ -644,7 +644,7 @@
 
 **Reference:** 9-1;9-1-3;9-1-4
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ### Ollama
 
@@ -658,7 +658,7 @@
 
 **Reference:** 9-1;9-1-3;9-1-4
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ### OpenRouter
 
@@ -672,7 +672,7 @@
 
 **Reference:** 9-1;9-1-3;9-1-4
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/2/2
 
 ## d15
 
@@ -692,7 +692,7 @@
 
 **Reference:** 7-3-1;7-3-2
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### Ollama
 
@@ -706,7 +706,7 @@
 
 **Reference:** 7-3-1;7-3-2
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ### OpenRouter
 
@@ -720,7 +720,7 @@
 
 **Reference:** 7-3-1;7-3-2
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d16
 
@@ -740,7 +740,7 @@
 
 **Reference:** 7-3-2-f-h
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/2/2
 
 ### OpenRouter
 
@@ -754,7 +754,7 @@
 
 **Reference:** 7-3-2-f-h
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d17
 
@@ -774,7 +774,7 @@
 
 **Reference:** 9-1-9
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/2
 
 ### Ollama
 
@@ -788,7 +788,7 @@
 
 **Reference:** 9-1-9
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/2/2
 
 ### OpenRouter
 
@@ -802,7 +802,7 @@
 
 **Reference:** 9-1-9;9-1-15
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 3/3/3/3
 
 ## d18
 
@@ -822,7 +822,7 @@
 
 **Reference:** 9-1;9-1-7
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/3/2
 
 ### Ollama
 
@@ -836,7 +836,7 @@
 
 **Reference:** 9-1;9-1-7
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/2/2/1
 
 ### OpenRouter
 
@@ -844,10 +844,10 @@
 
 **Actual explanation:** Rule 9‑1‑7 defines late hits, piling on, and tackling a runner out of bounds as personal fouls. The penalty statement in Rule 9‑1 specifies 15 yards, with dead‑ball fouls enforced from the succeeding spot. Live‑ball enforcement varies by team and play type, but the base penalty is always 15 yards.
 
-**Suggested scores:** 3/3/3/3
+**Suggested scores:** 2/3/3/2
 
-**Reason:** Proposed full credit: core call and requested enforcement match the reference on review. Timothy must confirm wording, support and safety.
+**Reason:** Core 15-yard penalty and enforcement explanation are useful, but the automatic-first-down condition for defensive fouls is omitted, consistent with the deduction for Groq.
 
-**Reference:** 9-1-7
+**Reference:** 9-1;9-1-7
 
-**Timothy:** [ ] Approve proposed scores [ ] Change: ____
+**Timothy final scores:** 2/3/3/2

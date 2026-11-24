@@ -30,7 +30,7 @@ Judge output is written beside its input result file. This update makes no new m
 
 Start with [the grouped answer review](grading/V2_REVIEW.md): **53 run-1 answers** across Groq, Gemma and Nemotron. Each includes the historical reference, actual output, proposed 1–3 scores for correct/useful/clear/safe, and the reason. Codex prepared these recommendations from saved answers and the pinned rulebook without reading the saved LLM-judge scores.
 
-The editable [suggested review CSV](grading/v2_suggested_review.csv) separates suggested_* fields from final correct/useful/clear/safe/notes fields. Final human score fields remain blank. The original v1 and v2 human grading sheets are unchanged. Regeneration with `uv run python eval/prepare_grading_review.py` preserves human score fields already entered in the suggested review CSV. Do not promote suggestions to Timothy’s final grades without his approval.
+The editable [suggested review CSV](grading/v2_suggested_review.csv) separates suggested_* fields from final correct/useful/clear/safe/notes fields. Timothy approved all 53 available v2 run-1 answers on November 23, 2026. Final human fields and `results/v2_rag_dev_grading.csv` now contain those approved grades. The v1 sheet remains ungraded. See [the completed human results and judge comparison](grading/V2_HUMAN_RESULTS.md). Regeneration with `uv run python eval/prepare_grading_review.py` preserves human score fields already entered in the suggested review CSV. Do not promote suggestions to Timothy’s final grades without his approval.
 
 Suggested starting cases:
 

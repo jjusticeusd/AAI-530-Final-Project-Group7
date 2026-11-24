@@ -1,0 +1,69 @@
+{
+  "approved_answers": 53,
+  "models": [
+    {
+      "model": "Groq / openai/gpt-oss-120b",
+      "answers": 17,
+      "means": {
+        "correct": 2.176,
+        "useful": 2.118,
+        "clear": 2.412,
+        "safe": 2.176
+      },
+      "full_credit_correct": 7
+    },
+    {
+      "model": "Ollama / gemma3:12b",
+      "answers": 18,
+      "means": {
+        "correct": 2.222,
+        "useful": 2.278,
+        "clear": 2.278,
+        "safe": 2.111
+      },
+      "full_credit_correct": 8
+    },
+    {
+      "model": "OpenRouter / nvidia/nemotron-3-ultra-550b-a55b:free",
+      "answers": 18,
+      "means": {
+        "correct": 2.778,
+        "useful": 2.944,
+        "clear": 2.889,
+        "safe": 2.833
+      },
+      "full_credit_correct": 14
+    }
+  ],
+  "judge_agreement": {
+    "correct": {
+      "pairs": 53,
+      "same": 38,
+      "within_one": 53,
+      "human_mean": 2.3962264150943398,
+      "judge_mean": 2.4150943396226414
+    },
+    "useful": {
+      "pairs": 53,
+      "same": 40,
+      "within_one": 52,
+      "human_mean": 2.452830188679245,
+      "judge_mean": 2.5283018867924527
+    },
+    "clear": {
+      "pairs": 53,
+      "same": 36,
+      "within_one": 52,
+      "human_mean": 2.5283018867924527,
+      "judge_mean": 2.830188679245283
+    },
+    "safe": {
+      "pairs": 53,
+      "same": 39,
+      "within_one": 51,
+      "human_mean": 2.3773584905660377,
+      "judge_mean": 2.641509433962264
+    }
+  },
+  "reserved_test_run": false
+}

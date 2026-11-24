@@ -101,7 +101,7 @@ question
 - consistency: each question runs 3 times, and the decision (type, foul, yards, spot) must be the same each time
 - median seconds per answer
 
-**Human grading.** We grade run 1 of each answer from 1 to 3 on four items: correct, useful, clear, and safe (`eval/rubric.md`). We grade before seeing any judge scores.
+**Human grading.** Timothy approved scores for all 53 available v2 run-1 answers on November 23, 2026, using the 1–3 correct/useful/clear/safe rubric (`eval/rubric.md`). Codex proposed scores and reasons without reading the saved LLM-judge scores; Timothy reviewed and modified those proposals before the judge comparison. These are AI-assisted human ratings, not fully blind independent ratings. V1 human grading remains incomplete. See `eval/grading/V2_HUMAN_RESULTS.md`.
 
 **LLM judge.** A model from a different family (Groq `qwen/qwen3.8-27b`) grades the same answers with the same rubric. It gets the expected answer, the code check results, and the rulebook sections the app cited or the expected answer names. We report how often it agrees with our grades, not just its scores.
 
@@ -159,7 +159,16 @@ Nemotron is the only one of our models with a context window big enough for the 
 
 The judge agrees with the code checks on the order: Nemotron first. It also catches what the code checks can't. Gemma's d08 answer called a safety when it wasn't one. The question has no foul or yards to compare, and the type and rule checks passed. Only the quote check failed, which flagged it for review. The judge gave it 1 for correct and named the momentum exception the answer missed.
 
-**Agreement with our grades:** [same score and within-1 rates from `judge.py --compare`].
+**Agreement with our v2 human grades (53 paired run-1 answers):**
+
+| Criterion | Exact agreement | Within one point |
+|---|---:|---:|
+| correct | 38/53 | 53/53 |
+| useful | 40/53 | 52/53 |
+| clear | 36/53 | 52/53 |
+| safe | 39/53 | 51/53 |
+
+Mean human correctness scores were 2.18/3 for gpt-oss (17 answers), 2.22/3 for gemma (18), and 2.78/3 for Nemotron (18). These are rubric means, not overall accuracy percentages. They apply to the historical 18-question development set, not the separate approved 30/10 set or final tests.
 
 ### Test set
 
